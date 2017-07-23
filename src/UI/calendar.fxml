@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="UI.CalendarController"
+            fx:id="calendarPane">
+    <top>
+        <HBox>
+            <Button fx:id="calendarBack" text="Last Month" onAction="#goToLastMonth"/>
+            <Label fx:id="monthYear" textAlignment="CENTER"/>
+            <Button fx:id="calendarNext" text="Next Month" onAction="#goToNextMonth"/>
+        </HBox>
+    </top>
+    <center>
+        <AnchorPane fx:id="calendarAnchor"
+                    prefHeight="370" prefWidth="420">
+            <TilePane fx:id="calendarTile" />
+        </AnchorPane>
+    </center>
+    <bottom>
+    </bottom>
+</BorderPane>
