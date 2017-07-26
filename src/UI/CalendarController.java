@@ -1,13 +1,25 @@
 package UI;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
@@ -20,6 +32,8 @@ public class CalendarController {
     public BorderPane calendarPane;
     public Button calendarBack;
     public Button calendarNext;
+    public ComboBox<String> calendarCombo;
+    public Label testchange;
 
     private LocalDate anchorDate;
 
@@ -30,6 +44,14 @@ public class CalendarController {
     public void initialize() {
         anchorDate = LocalDate.now();
         calendarTile.setMinSize(tileSize * 7, tileSize * 6 + 10);
+        calendarCombo.getItems().addAll(
+            "Faster",
+            "Higher",
+            "Stronger"
+        );
+        calendarCombo.getSelectionModel().selectedItemProperty().addListener((selected, oldGroup, newGroup) -> {
+            if (newGroup != null) testchange.setText("changed to" + newGroup);
+        });
         refreshCalendar(anchorDate);
     }
 
@@ -79,6 +101,31 @@ public class CalendarController {
             VBox box = new VBox();
             box.setPrefSize(tileSize, tileSize);
             box.getChildren().add(new Label(String.valueOf(i)));
+            box.getChildren().add(new Label("mehahaha"));
+            box.getChildren().add(new Label("wacacaca"));
+            box.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent event) {
+                    VBox vb = (VBox) event.getSource();
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("dayCell.fxml"));
+                        Parent calendarParent = fxmlLoader.load();
+                        DayCellController controller = fxmlLoader.getController();
+                        controller.setDate(String.format("%d%c%d%c%s%n", anchorDate.getYear(), '-',
+                                anchorDate.getMonthValue(), '-',
+                                ((Label) vb.getChildren().get(0)).getText()));
+
+                        Stage stage = new Stage();
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.initStyle(StageStyle.UNDECORATED);
+                        stage.setTitle("DayCell");
+                        stage.setScene(new Scene(calendarParent));
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
             calendarTile.getChildren().add(box);
         }
     }
