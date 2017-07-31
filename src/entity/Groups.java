@@ -15,7 +15,7 @@ public class Groups implements Serializable{
         gpcalendarid = groupcalendar;
     }
     @Override
-    public String toString() { return "group name is " + groupname + ", id is " + gid; }
+    public String toString() { return "group name is " + groupname + ", id is " + gid + ", members are " + membersid + ", owners are " + ownersid; }
     public int getGid() { return gid; }
     public String getName() { return groupname; }
     public int[] getMembers() { return membersid; }

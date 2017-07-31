@@ -11,8 +11,8 @@ public class Calendar implements Serializable{
         groupid = gid;
     }
     @Override
-    public String toString() { return "Calendar id is " + calendarid; }
-        public int getCalendarid() { return calendarid; }
+    public String toString() { return "Calendar id is " + calendarid + ", users are " + userid + ", groups are " + groupid; }
+    public int getCalendarid() { return calendarid; }
     public int[] getUsers() { return userid; }
     public int[] getGroups() { return groupid; }
 }
