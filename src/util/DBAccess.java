@@ -1,3 +1,4 @@
+package util;
 import java.sql.*;
 
 public class DBAccess {
@@ -28,7 +29,7 @@ public class DBAccess {
         return dba;
     }
     public Connection getConnection(){
-        String mUrl = "jdbc:mysql://localhost:3306/LemonCalendar";
+        String mUrl = "jdbc:mysql://localhost:3306/lemoncalendar";
         try{
             connection = DriverManager.getConnection(mUrl,mName,mPass);
             System.out.println("Success to connect to " + connection);

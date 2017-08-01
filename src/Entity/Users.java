@@ -1,4 +1,4 @@
-package entity;
+package Entity;
 import java.io.Serializable;
 
 public class Users implements Serializable{
