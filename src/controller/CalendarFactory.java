@@ -112,13 +112,13 @@ public class CalendarFactory {
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
 
-    public static void insertCal (List<String> userid, int groupid, List<String> eventid, int year, int month) throws SQLException, ClassNotFoundException {
+    public static void insertCal (int calendarid, List<String> userid, int groupid, List<String> eventid, int year, int month) throws SQLException, ClassNotFoundException {
         String updateStmt =
                 "BEGIN\n" +
                         "INSERT INTO CALENDAR\n" +
                         "(CALENDAR_ID, USER_ID, GROUP_ID, EVENT_ID, YEAR, MONTH)\n" +
                         "VALUES\n" +
-                        "(sequence_calendar.nextval, '"+convertListToString(userid, " ")+"', '"+convertListToString(eventid, " ")+"', '"+year+"', '"+month+"');\n" +
+                        "('"+calendarid+"', '"+convertListToString(userid, " ")+"', '"+convertListToString(eventid, " ")+"', '"+year+"', '"+month+"');\n" +
                         "END;";
 
         DBAccess.getDBA().executeUpdate(updateStmt);

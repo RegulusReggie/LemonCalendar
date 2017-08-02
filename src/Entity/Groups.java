@@ -1,18 +1,21 @@
 package Entity;
 import javafx.beans.property.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Groups {
     private IntegerProperty groupid;
     private String groupname;
-    private String membersid;
-    private String ownersid;
+    private List<String> membersid;
+    private List<String> ownersid;
     private IntegerProperty gpcalendarid;
 
     public Groups() {
         this.groupid = new SimpleIntegerProperty();
         this.groupname = new String();
-        this.membersid = new String();
-        this.ownersid = new String();
+        this.membersid = new ArrayList<String>();
+        this.ownersid = new ArrayList<String>();
         this.gpcalendarid = new SimpleIntegerProperty();
     }
     //groupid
@@ -27,31 +30,31 @@ public class Groups {
     }
 
     //groupname
-    public String getGroupName() {
-        return groupname;
+    public String getGroupName(String groupname) {
+        return this.groupname;
     }
     public void setGroupName(String groupName) {
         groupname = groupName;
     }
 
     //membersid
-    public String getMembersId() {
+    public List<String> getMembersId(List<String> strings) {
         return membersid;
     }
-    public void setMembersId(String membersId) {
+    public void setMembersId(List<String> membersId) {
         membersid = membersId;
     }
 
     //ownersid
-    public String getOwnersId() {
+    public List<String> getOwnersId(List<String> strings) {
         return ownersid;
     }
-    public void setOwnersId(String ownersId) {
+    public void setOwnersId(List<String> ownersId) {
         ownersid = ownersId;
     }
 
     //groupcalendarid
-    public int getGroupCalendarId() {
+    public int getGroupCalendarId(int gpcalendar_id) {
         return gpcalendarid.get();
     }
     public void setGroupCalendarId(int groupcalendarId) {
