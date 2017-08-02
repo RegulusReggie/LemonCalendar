@@ -1,44 +1,28 @@
-package controller;
+package Controller;
 import Entity.Calendar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import util.DBAccess;
+import Util.DBAccess;
+import Util.Commons;
+
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 
 public class CalendarFactory {
 
-    private static List<String> convertStringToList(String s, String delimiter) {
-        if (s != null) {
-            return Arrays.asList(s.split(delimiter));
-        }
-        else {
-            return new ArrayList<>();
-        }
-    }
+    private static Map<Integer, Calendar> calMap = new HashMap<>();
 
-    private static String convertListToString(List<String> list, String delimiter) {
-        String s = new String();
-        for (String ele : list) {
-            s = s + ele + delimiter;
-        }
-        return s;
-    }
+    private CalendarFactory() {}
 
     public static Calendar searchCalendar (String cid) throws SQLException, ClassNotFoundException {
         String selectStmt = "SELECT * FROM calendar WHERE cid ="+cid;
 
         try {
             ResultSet rsCal = DBAccess.getDBA().executeQuery(selectStmt);
-
-            Calendar cal = getCalendarFromResultSet(rsCal);
-
-            return cal;
+            return getCalendarFromResultSet(rsCal);
         } catch (SQLException e) {
             System.out.println("While searching a calendar with " + cid + " id, an error occurred: " +e);
             throw e;
@@ -49,11 +33,11 @@ public class CalendarFactory {
         if (rs.next()) {
             cal = new Calendar();
             cal.setCalendarId(rs.getInt("CALENDAR_ID"));
-            cal.setUserId(convertStringToList(rs.getString("USER_ID"), " "));
+            cal.setUserId(Commons.convertStringToList(rs.getString("USER_ID")));
             cal.setGroupId(rs.getInt("GROUP_ID"));
-            cal.setEventId(convertStringToList(rs.getString("EVENT_ID"), " "));
-            cal.setYearId(rs.getInt("YEAR"));
-            cal.setMonthId(rs.getInt("MONTH"));
+            cal.setEventId(Commons.convertStringToList(rs.getString("EVENT_ID")));
+            cal.setYear(rs.getInt("YEAR"));
+            cal.setMonth(rs.getInt("MONTH"));
         }
         return cal;
     }
@@ -63,10 +47,7 @@ public class CalendarFactory {
 
         try {
             ResultSet rsCals = DBAccess.getDBA().executeQuery(selectStmt);
-
-            ObservableList<Calendar> calList = (ObservableList<Calendar>) getCalendarFromResultSet(rsCals);
-
-            return calList;
+            return (ObservableList<Calendar>) getCalendarFromResultSet(rsCals);
         } catch (SQLException e) {
             System.out.println("SQL select operation has failed: "+ e);
             throw e;
@@ -79,11 +60,11 @@ public class CalendarFactory {
         while (rs.next()) {
             Calendar cal = new Calendar();
             cal.setCalendarId(rs.getInt("CALENDAR_ID"));
-            cal.setUserId(convertStringToList(rs.getString("USER_ID"), " "));
+            cal.setUserId(Commons.convertStringToList(rs.getString("USER_ID")));
             cal.setGroupId(rs.getInt("GROUP_ID"));
-            cal.setEventId(convertStringToList(rs.getString("EVENT_ID"), " "));
-            cal.setYearId(rs.getInt("YEAR"));
-            cal.setMonthId(rs.getInt("MONTH"));
+            cal.setEventId(Commons.convertStringToList(rs.getString("EVENT_ID")));
+            cal.setYear(rs.getInt("YEAR"));
+            cal.setMonth(rs.getInt("MONTH"));
 
             calList.add(cal);
         }
@@ -112,15 +93,55 @@ public class CalendarFactory {
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
 
-    public static void insertCal (int calendarid, List<String> userid, int groupid, List<String> eventid, int year, int month) throws SQLException, ClassNotFoundException {
+    public static void insertCal (List<String> userid, int groupid, List<String> eventid, int year, int month) throws SQLException, ClassNotFoundException {
         String updateStmt =
                 "BEGIN\n" +
                         "INSERT INTO CALENDAR\n" +
                         "(CALENDAR_ID, USER_ID, GROUP_ID, EVENT_ID, YEAR, MONTH)\n" +
                         "VALUES\n" +
-                        "('"+calendarid+"', '"+convertListToString(userid, " ")+"', '"+convertListToString(eventid, " ")+"', '"+year+"', '"+month+"');\n" +
+                        "(sequence_calendar.nextval, '"+Commons.convertListToString(userid)+"', '"
+                        +Commons.convertListToString(eventid)+"', '"+year+"', '"+month+"');\n" +
                         "END;";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
+    }
+
+    public static Calendar generateTestingCalendar(int cid) {
+        Calendar cal = new Calendar();
+        cal.setCalendarId(0);
+        cal.setUserId(Commons.convertStringToList("0"));
+        cal.setGroupId(-1);
+        cal.setEventId(Commons.convertStringToList("0 1 2"));
+        cal.setYear(2017);
+        cal.setMonth(8);
+        calMap.put(0, cal);
+
+        Calendar cal1 = new Calendar();
+        cal1.setCalendarId(1);
+        cal1.setUserId(Commons.convertStringToList("0 1 2"));
+        cal1.setGroupId(1);
+        cal1.setEventId(Commons.convertStringToList("3 4 5 6"));
+        cal1.setYear(2017);
+        cal1.setMonth(8);
+        calMap.put(1, cal1);
+
+        Calendar cal2 = new Calendar();
+        cal2.setCalendarId(2);
+        cal2.setUserId(Commons.convertStringToList("0 3 4"));
+        cal2.setGroupId(2);
+        cal2.setEventId(Commons.convertStringToList("7"));
+        cal2.setYear(2017);
+        cal2.setMonth(8);
+        calMap.put(2, cal2);
+
+        Calendar cal3 = new Calendar();
+        cal3.setCalendarId(3);
+        cal3.setUserId(Commons.convertStringToList("0 6 7"));
+        cal3.setGroupId(3);
+        cal3.setEventId(Commons.convertStringToList("8 9 10 13 51"));
+        cal3.setYear(2017);
+        cal3.setMonth(8);
+        calMap.put(3, cal3);
+        return calMap.get(cid);
     }
 }

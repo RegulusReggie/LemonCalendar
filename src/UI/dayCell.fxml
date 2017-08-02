@@ -10,19 +10,12 @@
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="615.0" prefWidth="371.0"
             xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="UI.DayCellController">
+            fx:controller="Controller.DayCellController">
     <top>
         <Label fx:id="date" text="7/25/2017" BorderPane.alignment="CENTER" />
     </top>
     <center>
-        <VBox spacing="50.0" BorderPane.alignment="CENTER">
-            <Label text="Event 1">
-                <VBox.margin>
-                    <Insets />
-                </VBox.margin>
-            </Label>
-            <Label layoutX="10.0" layoutY="10.0" text="Event 2" />
-            <Label layoutX="10.0" layoutY="45.0" text="Event 3" />
+        <VBox fx:id="eventVBox" spacing="50.0" BorderPane.alignment="CENTER">
             <padding>
                 <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
             </padding>
