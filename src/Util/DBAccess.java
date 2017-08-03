@@ -59,6 +59,14 @@ public class DBAccess {
                     "MONTH INT(11) NOT NULL, " +
                     "DAY INT(11) NOT NULL," +
                     "DESCRIPTION VARCHAR(256) NOT NULL);");
+            statement = connection.createStatement();
+            statement.executeUpdate("CREATE  TABLE GROUPS(" +
+                    "GROUP_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "GROUPNAME VARCHAR(45) NOT NULL," +
+                    "MEMBERS_ID VARCHAR(256) NOT NULL," +
+                    "OWNERS_ID VARCHAR(256) NOT NULL," +
+                    "GPCALENDAR_ID INT(11) NOT NULL);");
+            statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE CALENDAR(" +
                     "CALENDAR_ID INT(11) NOT NULL PRIMARY KEY," +
                     "GROUP_ID INT(11) NOT NULL," +
@@ -68,18 +76,16 @@ public class DBAccess {
                     "EVENT_ID INT(11) NOT NULL," +
                     "FOREIGN KEY (EVENT_ID) REFERENCES EVENT(EVENT_ID)," +
                     "FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(GROUP_ID));");
+            statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE USERS(" +
                     "USERS_ID INT(11) NOT NULL PRIMARY KEY," +
                     "USERNAME VARCHAR(45) NOT NULL," +
                     "PASSWORD VARCHAR(45) NOT NULL, " +
                     "ONLINE TINYINT(4) NOT NULL);");
-            statement.executeUpdate("CREATE  TABLE GROUPS(" +
-                    "GROUP_ID INT(11) NOT NULL PRIMARY KEY," +
-                    "GROUPNAME VARCHAR(45) NOT NULL," +
-                    "MEMBERS_ID VARCHAR(256) NOT NULL," +
-                    "OWNERS_ID VARCHAR(256) NOT NULL," +
-                    "GPCALENDAR_ID INT(11) NOT NULL" +
-                    "FOREIGN KEY (GPCALENDAR_ID) REFERENCES CALENDAR(CALENDAR_ID));");
+            statement = connection.createStatement();
+            statement.executeUpdate("ALTER   TABLE GROUPS," +
+                    "FOREIGN KEY (GPCALENDAR_ID) REFERENCES CALENDAR (CALENDAR_ID));" );
+
             getConnection();
         }catch (SQLException e){
             e.printStackTrace();
