@@ -44,6 +44,7 @@ public class LoginController {
             actiontarget.setText("plz put ur usrname.");
         }
     }
+
     public void btn_signup(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/SignUp.fxml"));
