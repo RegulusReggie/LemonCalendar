@@ -53,14 +53,33 @@ public class DBAccess {
             System.out.println("Success to connect to create lemoncalendar!" );
             connection = DriverManager.getConnection(mNewUrl,mName,mPass);
             statement = connection.createStatement();
-            statement.executeUpdate("CREATE  TABLE users(" +
-                    "uid INT(11) NOT NULL PRIMARY KEY," +
-                    "account VARCHAR(20) BINARY NOT NULL," +
-                    "password VARCHAR(20) BINARY NOT NULL, " +
-                    "online TINYINT(4) NOT NULL);");
-            statement.executeUpdate("CREATE  TABLE groups(" +
-                    "gid INT(11) NOT NULL PRIMARY KEY," +
-                    "groupname VARCHAR(20) BINARY NOT NULL);");
+            statement.executeUpdate("CREATE  TABLE EVENT(" +
+                    "EVENT_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "YEAR INT(11) NOT NULL," +
+                    "MONTH INT(11) NOT NULL, " +
+                    "DAY INT(11) NOT NULL," +
+                    "DESCRIPTION VARCHAR(256) NOT NULL);");
+            statement.executeUpdate("CREATE  TABLE CALENDAR(" +
+                    "CALENDAR_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "GROUP_ID INT(11) NOT NULL," +
+                    "YEAR INT(11) NOT NULL, " +
+                    "MONTH INT(11) NOT NULL," +
+                    "USER_ID VARCHAR(256) NOT NULL," +
+                    "EVENT_ID INT(11) NOT NULL," +
+                    "FOREIGN KEY (EVENT_ID) REFERENCES EVENT(EVENT_ID)," +
+                    "FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(GROUP_ID));");
+            statement.executeUpdate("CREATE  TABLE USERS(" +
+                    "USERS_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "USERNAME VARCHAR(45) NOT NULL," +
+                    "PASSWORD VARCHAR(45) NOT NULL, " +
+                    "ONLINE TINYINT(4) NOT NULL);");
+            statement.executeUpdate("CREATE  TABLE GROUPS(" +
+                    "GROUP_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "GROUPNAME VARCHAR(45) NOT NULL," +
+                    "MEMBERS_ID VARCHAR(256) NOT NULL," +
+                    "OWNERS_ID VARCHAR(256) NOT NULL," +
+                    "GPCALENDAR_ID INT(11) NOT NULL" +
+                    "FOREIGN KEY (GPCALENDAR_ID) REFERENCES CALENDAR(CALENDAR_ID));");
             getConnection();
         }catch (SQLException e){
             e.printStackTrace();
