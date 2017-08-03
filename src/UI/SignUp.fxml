@@ -8,8 +8,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1"
-   fx:controller="UI.SignUpController">
+<?import javafx.scene.control.PasswordField?>
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="176.0" prefWidth="347.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.SignUpController">
    <top>
       <Label text="Sign Up" BorderPane.alignment="CENTER" />
    </top>
@@ -32,7 +32,7 @@
                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField>
+                  <TextField fx:id="newUser">
                      <HBox.margin>
                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                      </HBox.margin>
@@ -46,18 +46,18 @@
                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField>
+                  <PasswordField fx:id="newPassword">
                      <HBox.margin>
                         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
                      </HBox.margin>
-                  </TextField>
+                  </PasswordField>
                </children>
             </HBox>
          </children>
       </VBox>
    </center>
    <bottom>
-      <Button mnemonicParsing="false" text="Submit" BorderPane.alignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#btn_submit" text="Submit" BorderPane.alignment="CENTER" />
    </bottom>
    <padding>
       <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
