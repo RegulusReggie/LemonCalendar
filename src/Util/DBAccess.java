@@ -54,27 +54,27 @@ public class DBAccess {
             connection = DriverManager.getConnection(mNewUrl,mName,mPass);
             statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE EVENT(" +
-                    "EVENT_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "EVENT_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                     "YEAR INT(11) NOT NULL," +
                     "MONTH INT(11) NOT NULL, " +
                     "DAY INT(11) NOT NULL," +
+                    "CALENDAR_ID INT(11) NOT NULL," +
                     "DESCRIPTION VARCHAR(256) NOT NULL);");
             statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE GROUPS(" +
-                    "GROUP_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "GROUP_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                     "GROUPNAME VARCHAR(45) NOT NULL," +
                     "MEMBERS_ID VARCHAR(256) NOT NULL," +
                     "OWNERS_ID VARCHAR(256) NOT NULL," +
                     "GPCALENDAR_ID INT(11) NOT NULL);");
             statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE CALENDAR(" +
-                    "CALENDAR_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "CALENDAR_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                     "GROUP_ID INT(11) NOT NULL," +
                     "YEAR INT(11) NOT NULL, " +
                     "MONTH INT(11) NOT NULL," +
                     "USER_ID VARCHAR(256) NOT NULL," +
-                    "EVENT_ID INT(11) NOT NULL," +
-                    "FOREIGN KEY (EVENT_ID) REFERENCES EVENT(EVENT_ID)," +
+                    "EVENT_ID VARCHAR(256) NOT NULL," +
                     "FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(GROUP_ID));");
             statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE USERS(" +
@@ -83,8 +83,9 @@ public class DBAccess {
                     "PASSWORD VARCHAR(45) NOT NULL, " +
                     "ONLINE TINYINT(4) NOT NULL);");
             statement = connection.createStatement();
-            statement.executeUpdate("ALTER   TABLE GROUPS," +
-                    "FOREIGN KEY (GPCALENDAR_ID) REFERENCES CALENDAR (CALENDAR_ID));" );
+            statement.execute("ALTER TABLE EVENT ADD FOREIGN KEY fk_CALENDAR_ID(CALENDAR_ID) REFERENCES CALENDAR(CALENAR_ID);");
+            statement = connection.createStatement();
+            statement.execute("ALTER TABLE GROUPS ADD FOREIGN KEY fk_GPCALENDAR_ID(GPCALENDAR_ID) REFERENCES CALENDAR(CALENAR_ID);");
 
             getConnection();
         }catch (SQLException e){
