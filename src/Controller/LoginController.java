@@ -22,24 +22,28 @@ public class LoginController {
     public void btn_signin(ActionEvent actionEvent) {
         if ((username.getText() != null) && !username.getText().isEmpty()) {
             actiontarget.setText("Username: " + username.getText());
-
-            //check if usrname exist;
-            //check if usrname and pw match;
-            //if no, actiontarget.setText("do not match");
-            //if yes, open new window.
+            int uid = -1;
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/calendar.fxml"));
-                Parent loginParent = fxmlLoader.load();
-                CalendarController controller = fxmlLoader.getController();
-                controller.setUserId(0);
-                Stage stage=(Stage) username.getScene().getWindow();
-                stage.setTitle("Calendar");
-                stage.setScene(new Scene(loginParent));
-                stage.show();
-            } catch (IOException e) {
-                e.printStackTrace();
+                uid = UserFactory.checkLogin(username.getText(), pw.getText());
+                if (uid == -1) {
+                    actiontarget.setText("wrong username or password");
+                } else {
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/calendar.fxml"));
+                        Parent loginParent = fxmlLoader.load();
+                        CalendarController controller = fxmlLoader.getController();
+                        controller.setUserId(uid);
+                        Stage stage=(Stage) username.getScene().getWindow();
+                        stage.setTitle("Calendar");
+                        stage.setScene(new Scene(loginParent));
+                        stage.show();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception sqle) {
+                sqle.printStackTrace();
             }
-
         } else {
             actiontarget.setText("plz put ur usrname.");
         }

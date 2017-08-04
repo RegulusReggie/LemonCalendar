@@ -78,7 +78,7 @@ public class DBAccess {
                     "FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(GROUP_ID));");
             statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE USERS(" +
-                    "USERS_ID INT(11) NOT NULL PRIMARY KEY," +
+                    "USERS_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                     "USERNAME VARCHAR(45) NOT NULL," +
                     "PASSWORD VARCHAR(45) NOT NULL, " +
                     "ONLINE TINYINT(4) NOT NULL);");
