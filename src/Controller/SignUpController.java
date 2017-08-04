@@ -1,5 +1,7 @@
 package Controller;
 
+import Entity.Calendar;
+import Entity.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,6 +22,17 @@ public class SignUpController {
     public PasswordField newPassword;
 
     public void btn_submit(ActionEvent actionEvent){
+        // validate username and password
+        User new_user;
+        try {
+            int uid = UserFactory.insertUser(newUser.getText(), newPassword.getText());
+            // Calendar new_cal = new Calendar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        //new_user.setCalendarId(new_cal.getCalendarId());
+
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/Login.fxml"));
             Parent submitParent = fxmlLoader.load();
@@ -30,7 +43,4 @@ public class SignUpController {
             e.printStackTrace();
         }
     }
-
-
-
 }
