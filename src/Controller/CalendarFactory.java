@@ -17,8 +17,8 @@ public class CalendarFactory {
 
     private CalendarFactory() {}
 
-    public static Calendar searchCalendar (String cid) throws SQLException, ClassNotFoundException {
-        String selectStmt = "SELECT * FROM calendar WHERE cid ="+cid;
+    public static Calendar searchCalendar (int cid) throws SQLException, ClassNotFoundException {
+        String selectStmt = "SELECT * FROM calendar WHERE CALENDAR_ID ="+cid+";";
 
         try {
             ResultSet rsCal = DBAccess.getDBA().executeQuery(selectStmt);
@@ -73,35 +73,21 @@ public class CalendarFactory {
 
     public static void updateCalEvent (int calId, String calEvent) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "BEGIN\n" +
-                        "   UPDATE CALENDAR\n" +
-                        "   SET EVENT_ID = '" + calEvent + "'\n" +
-                        "   WHERE CALENDAR_ID = " + calId + ";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+                "UPDATE CALENDAR SET EVENT_ID = '" + calEvent + "' " + "WHERE CALENDAR_ID = " + calId + ";";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
 
     public static void deleteCalWithId (int calId) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "BEGIN\n" +
-                        "   DELETE FROM CALENDAR\n" +
-                        "       WHERE CALENDAR_ID =" + calId +";\n" +
-                        "   COMMIT;\n" +
-                        "END;";
+                "DELETE FROM CALENDAR WHERE CALENDAR_ID =" + calId +";";
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
 
     public static void insertCal (List<String> userid, int groupid, List<String> eventid, int year, int month) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "BEGIN\n" +
-                        "INSERT INTO CALENDAR\n" +
-                        "(CALENDAR_ID, USER_ID, GROUP_ID, EVENT_ID, YEAR, MONTH)\n" +
-                        "VALUES\n" +
-                        "(sequence_calendar.nextval, '"+Commons.convertListToString(userid)+"', '"
-                        +Commons.convertListToString(eventid)+"', '"+year+"', '"+month+"');\n" +
-                        "END;";
+                "INSERT INTO CALENDAR (CALENDAR_ID, USER_ID, GROUP_ID, EVENT_ID, YEAR, MONTH) VALUES (AUTO_INCREMENT, '"+Commons.convertListToString(userid)+"', '"
+                        +groupid+"', '"+Commons.convertListToString(eventid)+"', '"+year+"', '"+month+"');";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
