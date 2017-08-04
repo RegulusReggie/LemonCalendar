@@ -66,7 +66,7 @@ public class Calendar {
     public void setEventId(List<String> eventId) {
         eventids = eventId;
         for (String id : eventId) {
-            Event e = EventFactory.getEventById(id, year.get(), month.get());
+            Event e = EventFactory.getEventById(Integer.valueOf(id), year.get(), month.get(), calendarid.get());
             addEvent(e);
         }
     }

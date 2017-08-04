@@ -10,14 +10,7 @@ public class Event {
     private IntegerProperty month;
     private IntegerProperty day;
     private StringProperty description;
-    public Event(int id, int y, int m, int d, String desc, int cid) {
-        this.eid.set(id);
-        this.year.set(y);
-        this.month.set(m);
-        this.day.set(d);
-        this.description.set(desc);
-        this.cal_id.set(cid);
-    }
+
     public Event() {
         this.eid = new SimpleIntegerProperty();
         this.year = new SimpleIntegerProperty();
