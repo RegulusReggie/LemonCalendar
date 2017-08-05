@@ -12,8 +12,8 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 600, 600));
+        primaryStage.setTitle("LemonCalender Login");
+        primaryStage.setScene(new Scene(root, 400, 400));
         primaryStage.show();
         DBAccess.getDBA();
     }

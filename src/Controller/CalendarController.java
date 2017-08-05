@@ -167,6 +167,17 @@ public class CalendarController {
     }
 
     public void createGroup(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/CreateGroup.fxml"));
+            Parent calendarParent = fxmlLoader.load();
+            CreateGroupController controller = fxmlLoader.getController();
+            Stage stage = new Stage();
 
+            stage.setTitle("Create a new group");
+            stage.setScene(new Scene(calendarParent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
