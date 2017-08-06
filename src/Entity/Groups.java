@@ -6,14 +6,14 @@ import java.util.List;
 
 public class Groups {
     private IntegerProperty groupid;
-    private String groupname;
+    private StringProperty groupname;
     private List<String> membersid;
     private List<String> ownersid;
     private IntegerProperty gpcalendarid;
 
     public Groups() {
         this.groupid = new SimpleIntegerProperty();
-        this.groupname = new String();
+        this.groupname = new SimpleStringProperty();
         this.membersid = new ArrayList<String>();
         this.ownersid = new ArrayList<String>();
         this.gpcalendarid = new SimpleIntegerProperty();
@@ -30,15 +30,15 @@ public class Groups {
     }
 
     //groupname
-    public String getGroupName(String groupname) {
-        return this.groupname;
+    public String getGroupName() {
+        return groupname.get();
     }
     public void setGroupName(String groupName) {
-        groupname = groupName;
+        this.groupname.set(groupName);
     }
 
     //membersid
-    public List<String> getMembersId(List<String> strings) {
+    public List<String> getMembersId() {
         return membersid;
     }
     public void setMembersId(List<String> membersId) {
@@ -46,7 +46,7 @@ public class Groups {
     }
 
     //ownersid
-    public List<String> getOwnersId(List<String> strings) {
+    public List<String> getOwnersId() {
         return ownersid;
     }
     public void setOwnersId(List<String> ownersId) {
@@ -54,7 +54,7 @@ public class Groups {
     }
 
     //groupcalendarid
-    public int getGroupCalendarId(int gpcalendar_id) {
+    public int getGroupCalendarId() {
         return gpcalendarid.get();
     }
     public void setGroupCalendarId(int groupcalendarId) {

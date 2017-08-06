@@ -63,7 +63,7 @@ public class DBAccess {
             statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE GROUPS(" +
                     "GROUP_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
-                    "GROUPNAME VARCHAR(45) NOT NULL," +
+                    "GROUPNAME VARCHAR(45) NOT NULL UNIQUE," +
                     "MEMBERS_ID VARCHAR(256) NOT NULL," +
                     "OWNERS_ID VARCHAR(256) NOT NULL," +
                     "GPCALENDAR_ID INT(11) NOT NULL);");
@@ -78,7 +78,7 @@ public class DBAccess {
             statement = connection.createStatement();
             statement.executeUpdate("CREATE  TABLE USERS(" +
                     "USERS_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
-                    "USERNAME VARCHAR(45) NOT NULL," +
+                    "USERNAME VARCHAR(45) NOT NULL UNIQUE," +
                     "PASSWORD VARCHAR(45) NOT NULL, " +
                     "ONLINE TINYINT(4) NOT NULL);");
             statement = connection.createStatement();
