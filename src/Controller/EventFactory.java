@@ -16,7 +16,14 @@ public class EventFactory {
 
     public static Event getEventById(int id, int year, int month, int cid) {
         Random rand = new Random();
-        return new Event(id, year, month, rand.nextInt(28) + 1, Integer.toString(id), cid);
+        Event e = new Event();
+        e.setCalID(cid);
+        e.setDay(rand.nextInt(28) + 1);
+        e.setDescription(String.valueOf(id));
+        e.setMonth(month);
+        e.setYear(year);
+        e.setID(id);
+        return e;
     }
 
     public static Event searchEventByEID (String eid) throws SQLException, ClassNotFoundException {

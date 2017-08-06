@@ -28,7 +28,7 @@ public class UserFactory {
         User u = null;
         if (rs.next()) {
             u = new User();
-            u.setUserId(rs.getInt("USER_ID"));
+            u.setUserId(rs.getInt("USERS_ID"));
             u.setUserName(rs.getString("USERNAME"));
             u.setPassword(rs.getString("PASSWORD"));
         }
