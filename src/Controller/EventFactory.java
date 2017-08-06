@@ -26,7 +26,7 @@ public class EventFactory {
         return e;
     }
 
-    public static Event searchEventByEID (String eid) throws SQLException, ClassNotFoundException {
+    public static Event searchEventByEID (int eid) throws SQLException, ClassNotFoundException {
         String selectStmt = "SELECT * FROM event WHERE EVENT_ID="+eid;
 
         try {
@@ -63,12 +63,12 @@ public class EventFactory {
         }
         return eve;
     }
-    public static ObservableList<Event> searchEventByDate (int year, int month, int day) throws SQLException, ClassNotFoundException {
-        String selectStmt = "SELECT * FROM EVENT WHERE YEAR="+year + " AND MONTH=" + month + " AND DAY=" + day;
+    public static Event searchEventByDate (int year, int month, int day) throws SQLException, ClassNotFoundException {
+        String selectStmt = "SELECT * FROM EVENT WHERE YEAR="+year + " AND MONTH=" + month + " AND DAY=" +day+ ";";
 
         try {
             ResultSet rsCals = DBAccess.getDBA().executeQuery(selectStmt);
-            return (ObservableList<Event>) getEventFromResultSet(rsCals);
+            return getEventFromResultSetSingle(rsCals);
         } catch (SQLException e) {
             System.out.println(String.format("While searching a event with date %d-%d-%d, an error occurred: ",year, month,day) +e);
             throw e;
@@ -89,37 +89,24 @@ public class EventFactory {
 
     public static void updateEvent (int eid, int y, int m, int d, String desc) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "BEGIN\n" +
-                        "   UPDATE EVENT " +
-                        "   SET YEAR = '" + y + "' " +
-                        "   SET MONTH = '" + m + "' " +
-                        "   SET DAY = '" + d + "' " +
-                        "   SET DESCRIPTION = '" + desc + "' " +
-                        "   WHERE EVENT_ID = " + eid + "; " +
-                        "   COMMIT;\n" +
-                        "END;";
+                "UPDATE EVENT SET YEAR = " +y+ ", MONTH = " +m+ ", DAY =" +d+ ", DESCRIPTION = '" + desc + "'" + " WHERE EVENT_ID = " +eid+ ";";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
 
     public static void deleteEventWithId (int eid) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "BEGIN" +
-                        "   DELETE FROM EVENT " +
-                        "       WHERE EVENT_ID =" + eid +"; " +
-                        "   COMMIT; " +
-                        "END;";
+                "DELETE FROM EVENT " +
+                        "       WHERE EVENT_ID =" + eid +"; ";
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
 
     public static void insertEvent (int year, int month, int day, String description, int cid) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "BEGIN\n" +
-                        "INSERT INTO EVENT " +
+                "INSERT INTO EVENT " +
                         "(YEAR, MONTH, DAY, DESCRIPTION, CALENDAR_ID) " +
                         "VALUES " +
-                        "("+year+"', '"+month+"', '" + day + "', '"+description + "', '"+ cid +"'); " +
-                        "END;";
+                        "("+year+", "+month+", " + day + ", '"+description + "', "+ cid +"); ";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
     }

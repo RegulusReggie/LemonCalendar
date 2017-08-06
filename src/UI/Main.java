@@ -1,6 +1,7 @@
 package UI;
 
 import Controller.CalendarFactory;
+import Controller.EventFactory;
 import Controller.GroupFactory;
 import Entity.*;
 import Util.DBAccess;
@@ -22,7 +23,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
         DBAccess.getDBA();
-        System.out.print(GroupFactory.searchGroups(6).getGroupName());
+
+        System.out.print(EventFactory.searchEventByDate(1984,12,31).getDescription());
         //GroupFactory.updateGpMember(1, convertStringToList("1 2 8 4"));
         //GroupFactory.insertGp("NewGroup", convertStringToList("3 4 6"), convertStringToList("1"), 3);
         //CalendarFactory.insertCal(3, convertStringToList("2 3 4 5 6 7 8"), 5400, 12);
