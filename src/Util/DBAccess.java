@@ -73,7 +73,6 @@ public class DBAccess {
                     "GROUP_ID INT(11) NOT NULL," +
                     "YEAR INT(11) NOT NULL, " +
                     "MONTH INT(11) NOT NULL," +
-                    "USER_ID VARCHAR(256) NOT NULL," +
                     "EVENT_ID VARCHAR(256) NOT NULL," +
                     "FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(GROUP_ID));");
             statement = connection.createStatement();

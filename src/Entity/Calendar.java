@@ -10,7 +10,6 @@ import java.util.Map;
 
 public class Calendar {
     private IntegerProperty calendarid;
-    private List<String> userids;
     private IntegerProperty groupid;
     private List<String> eventids;
     private IntegerProperty year;
@@ -19,7 +18,6 @@ public class Calendar {
 
     public Calendar() {
         this.calendarid = new SimpleIntegerProperty();
-        this.userids = new ArrayList<>();
         this.groupid = new SimpleIntegerProperty();
         this.eventids = new ArrayList<>();
         this.year = new SimpleIntegerProperty();
@@ -38,16 +36,6 @@ public class Calendar {
         return calendarid;
     }
 
-    //userid
-    public List<String> getUserId() {
-        return userids;
-    }
-
-    public void setUserId(List<String> userId) {
-        userids = userId;
-    }
-
-
     //groupid
     public int getGroupId() {
         return groupid.get();
@@ -65,10 +53,10 @@ public class Calendar {
     }
     public void setEventId(List<String> eventId) {
         eventids = eventId;
-        for (String id : eventId) {
+        /*for (String id : eventId) {
             Event e = EventFactory.getEventById(id, year.get(), month.get());
             addEvent(e);
-        }
+        }*/
     }
 
     //year

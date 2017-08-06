@@ -33,7 +33,6 @@ public class CalendarFactory {
         if (rs.next()) {
             cal = new Calendar();
             cal.setCalendarId(rs.getInt("CALENDAR_ID"));
-            cal.setUserId(Commons.convertStringToList(rs.getString("USER_ID")));
             cal.setGroupId(rs.getInt("GROUP_ID"));
             cal.setEventId(Commons.convertStringToList(rs.getString("EVENT_ID")));
             cal.setYear(rs.getInt("YEAR"));
@@ -43,7 +42,7 @@ public class CalendarFactory {
     }
 
     public static ObservableList<Calendar> searchCalendars () throws SQLException, ClassNotFoundException {
-        String selectStmt = "SELECT * FROM CALENDAR";
+        String selectStmt = "SELECT * FROM CALENDAR;";
 
         try {
             ResultSet rsCals = DBAccess.getDBA().executeQuery(selectStmt);
@@ -60,7 +59,6 @@ public class CalendarFactory {
         while (rs.next()) {
             Calendar cal = new Calendar();
             cal.setCalendarId(rs.getInt("CALENDAR_ID"));
-            cal.setUserId(Commons.convertStringToList(rs.getString("USER_ID")));
             cal.setGroupId(rs.getInt("GROUP_ID"));
             cal.setEventId(Commons.convertStringToList(rs.getString("EVENT_ID")));
             cal.setYear(rs.getInt("YEAR"));
@@ -84,18 +82,21 @@ public class CalendarFactory {
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
 
-    public static void insertCal (List<String> userid, int groupid, List<String> eventid, int year, int month) throws SQLException, ClassNotFoundException {
+    public static void insertCal (int groupid, List<String> eventid, int year, int month) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "INSERT INTO CALENDAR (CALENDAR_ID, USER_ID, GROUP_ID, EVENT_ID, YEAR, MONTH) VALUES (AUTO_INCREMENT, '"+Commons.convertListToString(userid)+"', '"
-                        +groupid+"', '"+Commons.convertListToString(eventid)+"', '"+year+"', '"+month+"');";
+                "INSERT INTO CALENDAR (GROUP_ID, EVENT_ID, YEAR, MONTH) VALUES ('" +groupid+"', '"+Commons.convertListToString(eventid)+"', '"+year+"', '"+month+"');";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
+    }
+    public static String toString(Calendar cal) {
+        String s;
+        s = "Calendar_id: " +cal.getCalendarId()+ ", Group_id: " +cal.getGroupId()+ ", Year: " +cal.getYear()+ ", Month: " +cal.getMonth()+ ", Event_id: " +cal.getEventId();
+        return s;
     }
 
     public static Calendar generateTestingCalendar(int cid) {
         Calendar cal = new Calendar();
         cal.setCalendarId(0);
-        cal.setUserId(Commons.convertStringToList("0"));
         cal.setGroupId(-1);
         cal.setEventId(Commons.convertStringToList("0 1 2"));
         cal.setYear(2017);
@@ -104,7 +105,6 @@ public class CalendarFactory {
 
         Calendar cal1 = new Calendar();
         cal1.setCalendarId(1);
-        cal1.setUserId(Commons.convertStringToList("0 1 2"));
         cal1.setGroupId(1);
         cal1.setEventId(Commons.convertStringToList("3 4 5 6"));
         cal1.setYear(2017);
@@ -113,7 +113,6 @@ public class CalendarFactory {
 
         Calendar cal2 = new Calendar();
         cal2.setCalendarId(2);
-        cal2.setUserId(Commons.convertStringToList("0 3 4"));
         cal2.setGroupId(2);
         cal2.setEventId(Commons.convertStringToList("7"));
         cal2.setYear(2017);
@@ -122,7 +121,6 @@ public class CalendarFactory {
 
         Calendar cal3 = new Calendar();
         cal3.setCalendarId(3);
-        cal3.setUserId(Commons.convertStringToList("0 6 7"));
         cal3.setGroupId(3);
         cal3.setEventId(Commons.convertStringToList("8 9 10 13 51"));
         cal3.setYear(2017);
@@ -130,4 +128,5 @@ public class CalendarFactory {
         calMap.put(3, cal3);
         return calMap.get(cid);
     }
+
 }
