@@ -13,7 +13,7 @@ import java.util.List;
 public class GroupFactory {
 
     public static Group searchGroup (int gpid) throws SQLException, ClassNotFoundException {
-        String selectStmt = "SELECT * FROM GROUP WHERE GROUP_ID = " +gpid+ ";";
+        String selectStmt = "SELECT * FROM LEMONCALENDAR.GROUP WHERE GROUP_ID = " +gpid+ ";";
 
         try {
             ResultSet rsGp = DBAccess.getDBA().executeQuery(selectStmt);
@@ -38,7 +38,7 @@ public class GroupFactory {
     }
 
     public static ObservableList<Group> searchGroups () throws SQLException, ClassNotFoundException {
-        String selectStmt = "SELECT * FROM GROUP";
+        String selectStmt = "SELECT * FROM LEMONCALENDAR.GROUP";
 
         try {
             ResultSet rsgp = DBAccess.getDBA().executeQuery(selectStmt);
@@ -68,7 +68,7 @@ public class GroupFactory {
 
     public static void updateGpMember (int gpId, List<Integer> memberID) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "UPDATE GROUP" +
+                "UPDATE LEMONCALENDAR.GROUP" +
                         "   SET MEMBERS_ID = '" +Commons.convertListToString(memberID)+ "' WHERE GROUP_ID = " + gpId + ";";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
