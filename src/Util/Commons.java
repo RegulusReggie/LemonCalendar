@@ -3,23 +3,24 @@ package Util;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Commons {
     private Commons() {}
 
-    public static List<String> convertStringToList(String s) {
+    public static List<Integer> convertStringToList(String s) {
         if (s != null) {
-            return Arrays.asList(s.split(" "));
+            return Arrays.asList(s.split(" ")).stream().map(p -> Integer.valueOf(p)).collect(Collectors.toList());
         }
         else {
             return new ArrayList<>();
         }
     }
 
-    public static String convertListToString(List<String> list) {
+    public static String convertListToString(List<Integer> list) {
         String s = new String();
-        for (String ele : list) {
-            s = s + ele + " ";
+        for (Integer ele : list) {
+            s = s + ele.toString() + " ";
         }
         return s;
     }

@@ -1,20 +1,17 @@
 package Controller;
 
-import Entity.Calendar;
 import Entity.User;
-import Util.Commons;
 import Util.DBAccess;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
 
 public class UserFactory {
     private UserFactory() {}
 
     public static User getUserById (int uid) throws SQLException, ClassNotFoundException {
-        String selectStmt = "SELECT * FROM users WHERE USERS_ID =" + uid + ";";
+        String selectStmt = "SELECT * FROM user WHERE USER_ID =" + uid + ";";
 
         try {
             ResultSet rs = DBAccess.getDBA().executeQuery(selectStmt);
@@ -28,18 +25,16 @@ public class UserFactory {
         User u = null;
         if (rs.next()) {
             u = new User();
-            u.setUserId(rs.getInt("USERS_ID"));
+            u.setUserId(rs.getInt("USER_ID"));
             u.setUserName(rs.getString("USERNAME"));
             u.setPassword(rs.getString("PASSWORD"));
         }
         return u;
     }
 
-    public static int insertUser (String username, String password
-                                   // , List<String> gpbelongid, List<String> gpownid, int calendarid
-                                   ) throws SQLException, ClassNotFoundException {
+    public static int insertUser (String username, String password) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                        "INSERT INTO `lemoncalendar`.`USERS`\n" +
+                        "INSERT INTO `lemoncalendar`.`USER`\n" +
                         "(`USERNAME`, `PASSWORD`, `ONLINE`)\n" +
                         "VALUES\n" +
                         "('" + username +"', '" + password + "'," + 0 + ");";
@@ -56,7 +51,7 @@ public class UserFactory {
 
     public static int checkLogin(String username, String password) throws SQLException {
         Statement stmt = DBAccess.getDBA().getConnection().createStatement();
-        String selectStmt = "SELECT * FROM users WHERE username ='"+username + "';";
+        String selectStmt = "SELECT * FROM user WHERE username ='"+username + "';";
         int uid = -1;
         try {
             ResultSet rs = DBAccess.getDBA().executeQuery(selectStmt);
@@ -65,7 +60,7 @@ public class UserFactory {
             } else if (!rs.getString("PASSWORD").equals(password)) {
                 System.out.println("Password doesn't match");
             } else {
-                uid = rs.getInt("USERS_ID");
+                uid = rs.getInt("USER_ID");
             }
         } catch (SQLException e) {
             System.out.println("While searching a user with " + username + " username, an error occurred: " +e);

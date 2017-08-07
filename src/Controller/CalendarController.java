@@ -60,6 +60,7 @@ public class CalendarController {
             e.printStackTrace();
         }
 
+
         // set up user's personal calendar
         setCalendarID(2);
 

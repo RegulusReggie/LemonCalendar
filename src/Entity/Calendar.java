@@ -10,15 +10,13 @@ import java.util.Map;
 
 public class Calendar {
     private IntegerProperty calendarid;
-    private IntegerProperty groupid;
-    private List<String> eventids;
+    private List<Integer> eventids;
     private IntegerProperty year;
     private IntegerProperty month;
     private Map<Integer, List<Event>> eventsMap;
 
     public Calendar() {
         this.calendarid = new SimpleIntegerProperty();
-        this.groupid = new SimpleIntegerProperty();
         this.eventids = new ArrayList<>();
         this.year = new SimpleIntegerProperty();
         this.month = new SimpleIntegerProperty();
@@ -36,22 +34,11 @@ public class Calendar {
         return calendarid;
     }
 
-    //groupid
-    public int getGroupId() {
-        return groupid.get();
-    }
-    public void setGroupId(int groupId) {
-        this.groupid.set(groupId);
-    }
-    public IntegerProperty groupIdProperty() {
-        return groupid;
-    }
-
     //eventid
-    public List<String> getEventId() {
+    public List<Integer> getEventIds() {
         return eventids;
     }
-    public void setEventId(List<String> eventId) {
+    public void setEventIds(List<Integer> eventId) {
         eventids = eventId;
         /*for (String id : eventId) {
             Event e = EventFactory.getEventById(id, year.get(), month.get());

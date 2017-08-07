@@ -8,6 +8,7 @@ import Util.Commons;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.*;
 
 
@@ -33,8 +34,7 @@ public class CalendarFactory {
         if (rs.next()) {
             cal = new Calendar();
             cal.setCalendarId(rs.getInt("CALENDAR_ID"));
-            cal.setGroupId(rs.getInt("GROUP_ID"));
-            cal.setEventId(Commons.convertStringToList(rs.getString("EVENT_ID")));
+            cal.setEventIds(Commons.convertStringToList(rs.getString("EVENT_IDS")));
             cal.setYear(rs.getInt("YEAR"));
             cal.setMonth(rs.getInt("MONTH"));
         }
@@ -59,8 +59,7 @@ public class CalendarFactory {
         while (rs.next()) {
             Calendar cal = new Calendar();
             cal.setCalendarId(rs.getInt("CALENDAR_ID"));
-            cal.setGroupId(rs.getInt("GROUP_ID"));
-            cal.setEventId(Commons.convertStringToList(rs.getString("EVENT_ID")));
+            cal.setEventIds(Commons.convertStringToList(rs.getString("EVENT_IDS")));
             cal.setYear(rs.getInt("YEAR"));
             cal.setMonth(rs.getInt("MONTH"));
 
@@ -71,7 +70,7 @@ public class CalendarFactory {
 
     public static void updateCalEvent (int calId, String calEvent) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "UPDATE CALENDAR SET EVENT_ID = '" + calEvent + "' " + "WHERE CALENDAR_ID = " + calId + ";";
+                "UPDATE CALENDAR SET EVENT_IDS = '" + calEvent + "' " + "WHERE CALENDAR_ID = " + calId + ";";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
@@ -82,47 +81,51 @@ public class CalendarFactory {
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
 
-    public static void insertCal (int groupid, List<String> eventid, int year, int month) throws SQLException, ClassNotFoundException {
+    public static int insertCal (List<Integer> eventids, int year, int month) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "INSERT INTO CALENDAR (GROUP_ID, EVENT_ID, YEAR, MONTH) VALUES ('" +groupid+"', '"+Commons.convertListToString(eventid)+"', '"+year+"', '"+month+"');";
+                "INSERT INTO CALENDAR (EVENT_IDS, YEAR, MONTH) VALUES ('"
+                        + Commons.convertListToString(eventids)+"', '"+year+"', '"+month+"');";
 
-        DBAccess.getDBA().executeUpdate(updateStmt);
+        Statement stmt = DBAccess.getDBA().getConnection().createStatement();
+        stmt.executeUpdate(updateStmt, Statement.RETURN_GENERATED_KEYS);
+        ResultSet generatedKeys = stmt.getGeneratedKeys();
+        int id = -1;
+        if (generatedKeys.next()) {
+            id = generatedKeys.getInt(1);
+        }
+        return id;
     }
     public static String toString(Calendar cal) {
         String s;
-        s = "Calendar_id: " +cal.getCalendarId()+ ", Group_id: " +cal.getGroupId()+ ", Year: " +cal.getYear()+ ", Month: " +cal.getMonth()+ ", Event_id: " +cal.getEventId();
+        s = "Calendar_id: " +cal.getCalendarId() + ", Year: " +cal.getYear()+ ", Month: " +cal.getMonth()+ ", Event_ids: " +cal.getEventIds();
         return s;
     }
 
     public static Calendar generateTestingCalendar(int cid) {
         Calendar cal = new Calendar();
         cal.setCalendarId(0);
-        cal.setGroupId(-1);
-        cal.setEventId(Commons.convertStringToList("0 1 2"));
+        cal.setEventIds(Commons.convertStringToList("0 1 2"));
         cal.setYear(2017);
         cal.setMonth(8);
         calMap.put(0, cal);
 
         Calendar cal1 = new Calendar();
         cal1.setCalendarId(1);
-        cal1.setGroupId(1);
-        cal1.setEventId(Commons.convertStringToList("3 4 5 6"));
+        cal1.setEventIds(Commons.convertStringToList("3 4 5 6"));
         cal1.setYear(2017);
         cal1.setMonth(8);
         calMap.put(1, cal1);
 
         Calendar cal2 = new Calendar();
         cal2.setCalendarId(2);
-        cal2.setGroupId(2);
-        cal2.setEventId(Commons.convertStringToList("7"));
+        cal2.setEventIds(Commons.convertStringToList("7"));
         cal2.setYear(2017);
         cal2.setMonth(8);
         calMap.put(2, cal2);
 
         Calendar cal3 = new Calendar();
         cal3.setCalendarId(3);
-        cal3.setGroupId(3);
-        cal3.setEventId(Commons.convertStringToList("8 9 10 13 51"));
+        cal3.setEventIds(Commons.convertStringToList("8 9 10 13 51"));
         cal3.setYear(2017);
         cal3.setMonth(8);
         calMap.put(3, cal3);

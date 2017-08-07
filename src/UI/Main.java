@@ -12,19 +12,17 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import static Util.Commons.convertStringToList;
-
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
-        primaryStage.setTitle("Hello World");
+        primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
-        DBAccess.getDBA();
+        //DBAccess.getDBA();
 
-        System.out.print(EventFactory.searchEventByDate(1984,12,31).getDescription());
+        //System.out.print(EventFactory.searchEventByDate(1984,12,31).getDescription());
         //GroupFactory.updateGpMember(1, convertStringToList("1 2 8 4"));
         //GroupFactory.insertGp("NewGroup", convertStringToList("3 4 6"), convertStringToList("1"), 3);
         //CalendarFactory.insertCal(3, convertStringToList("2 3 4 5 6 7 8"), 5400, 12);

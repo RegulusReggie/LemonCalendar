@@ -53,38 +53,49 @@ public class DBAccess {
             System.out.println("Success to connect to create lemoncalendar!" );
             connection = DriverManager.getConnection(mNewUrl,mName,mPass);
             statement = connection.createStatement();
-            statement.executeUpdate("CREATE  TABLE EVENT(" +
+            statement.executeUpdate("CREATE  TABLE LEMONCALENDAR.CALENDAR(" +
+                    "CALENDAR_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
+                    "YEAR INT(11) NOT NULL, " +
+                    "MONTH INT(11) NOT NULL," +
+                    "EVENT_IDS VARCHAR(256) NOT NULL);");
+
+            statement = connection.createStatement();
+            statement.executeUpdate("CREATE  TABLE LEMONCALENDAR.EVENT(" +
                     "EVENT_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                     "YEAR INT(11) NOT NULL," +
                     "MONTH INT(11) NOT NULL, " +
                     "DAY INT(11) NOT NULL," +
                     "CALENDAR_ID INT(11) NOT NULL," +
-                    "DESCRIPTION VARCHAR(256) NOT NULL);");
+                    "DESCRIPTION VARCHAR(256) NOT NULL," +
+                    "FOREIGN KEY (CALENDAR_ID) REFERENCES CALENDAR(CALENDAR_ID));");
+
             statement = connection.createStatement();
-            statement.executeUpdate("CREATE  TABLE GROUPS(" +
+            statement.executeUpdate("CREATE  TABLE LEMONCALENDAR.GROUP(" +
                     "GROUP_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                     "GROUPNAME VARCHAR(45) NOT NULL UNIQUE," +
                     "MEMBERS_ID VARCHAR(256) NOT NULL," +
-                    "OWNERS_ID VARCHAR(256) NOT NULL," +
-                    "GPCALENDAR_ID INT(11) NOT NULL);");
+                    "OWNER_ID INT(11) NOT NULL);");
+
             statement = connection.createStatement();
-            statement.executeUpdate("CREATE  TABLE CALENDAR(" +
-                    "CALENDAR_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
-                    "GROUP_ID INT(11) NOT NULL," +
-                    "YEAR INT(11) NOT NULL, " +
-                    "MONTH INT(11) NOT NULL," +
-                    "EVENT_ID VARCHAR(256) NOT NULL," +
-                    "FOREIGN KEY (GROUP_ID) REFERENCES GROUPS(GROUP_ID));");
-            statement = connection.createStatement();
-            statement.executeUpdate("CREATE  TABLE USERS(" +
-                    "USERS_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
+            statement.executeUpdate("CREATE  TABLE LEMONCALENDAR.USER(" +
+                    "USER_ID INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT," +
                     "USERNAME VARCHAR(45) NOT NULL UNIQUE," +
-                    "PASSWORD VARCHAR(45) NOT NULL, " +
+                    "PASSWORD VARCHAR(45) NOT NULL," +
                     "ONLINE TINYINT(4) NOT NULL);");
+
             statement = connection.createStatement();
-            statement.execute("ALTER TABLE EVENT ADD FOREIGN KEY fk_CALENDAR_ID(CALENDAR_ID) REFERENCES CALENDAR(CALENAR_ID);");
+            statement.executeUpdate("CREATE  TABLE LEMONCALENDAR.GROUPTOUSER(" +
+                    "GROUP_ID INT(11) NOT NULL," +
+                    "USER_ID INT(11) NOT NULL," +
+                    "FOREIGN KEY (GROUP_ID) REFERENCES LEMONCALENDAR.GROUP(GROUP_ID)," +
+                    "FOREIGN KEY (USER_ID) REFERENCES USER(USER_ID));");
+
             statement = connection.createStatement();
-            statement.execute("ALTER TABLE GROUPS ADD FOREIGN KEY fk_GPCALENDAR_ID(GPCALENDAR_ID) REFERENCES CALENDAR(CALENAR_ID);");
+            statement.executeUpdate("CREATE  TABLE LEMONCALENDAR.GROUPTOCALENDAR(" +
+                    "GROUP_ID INT(11) NOT NULL," +
+                    "CALENDAR_ID INT(11) NOT NULL," +
+                    "FOREIGN KEY (GROUP_ID) REFERENCES LEMONCALENDAR.GROUP(GROUP_ID)," +
+                    "FOREIGN KEY (CALENDAR_ID) REFERENCES CALENDAR(CALENDAR_ID));");
 
             getConnection();
         }catch (SQLException e){
