@@ -22,6 +22,7 @@
         <TextArea fx:id="groupmember" prefHeight="60.0" prefWidth="189.0" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Button fx:id="bt_create" mnemonicParsing="false" onAction="#btcreate" text="Create" GridPane.columnIndex="0" GridPane.rowIndex="3" />
         <Button fx:id="bt_cancel" mnemonicParsing="false" onAction="#btcancel" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label fx:id="actionTarget" mnemonicParsing="false" GridPane.columnIndex="0" GridPane.rowIndex="4" />
       </children>
       <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

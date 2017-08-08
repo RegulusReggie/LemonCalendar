@@ -23,7 +23,7 @@ public class SignUpController {
             int uid = UserFactory.insertUser(newUser.getText(), newPassword.getText());
             LocalDate date = LocalDate.now();
             int cid = CalendarFactory.insertCal(new ArrayList<>(), date.getYear(), date.getMonthValue());
-            int gid = GroupFactory.insertGp("Personal", new ArrayList<>(), uid);
+            int gid = GroupFactory.insertGp(newUser.getText(), new ArrayList<>(), uid);
             GroupToUserDB.insertG2U(gid, uid);
             GroupToCalendarDB.insertG2C(gid, cid);
         } catch (Exception e) {

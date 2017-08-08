@@ -2,6 +2,7 @@ package Controller;
 
 import Entity.Calendar;
 import Entity.Event;
+import Entity.Group;
 import Entity.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,10 +25,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.TextStyle;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class CalendarController {
 
@@ -42,6 +40,7 @@ public class CalendarController {
 
     private LocalDate anchorDate;
     private int calendarID;
+    private int groupID;
     private int userID;
 
     public TilePane calendarTile;
@@ -50,40 +49,32 @@ public class CalendarController {
 
     private Map<String, Integer> groupMap = new HashMap<>();
 
-    private void setCalendarID(int cid) { calendarID = cid;}
+    private void setGroupID(int gid) { groupID = gid;}
     void setUserId(int id) {
         userID = id;
         User cur_user;
         try {
             cur_user = UserFactory.getUserById(userID);
+
+            // get user's groups
+            List<Integer> gids = GroupToUserDB.getGroupsByUserId(id);
+            List<String> groupnames = new ArrayList<>();
+            for (int gid : gids) {
+                Group gp = GroupFactory.searchGroup(gid);
+                groupnames.add(gp.getGroupName());
+                groupMap.put(gp.getGroupName(), gid);
+            }
+            calendarCombo.getItems().addAll(groupnames);
+            calendarCombo.getSelectionModel().select(cur_user.getUserName());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        // set up user's personal calendar
-        setCalendarID(2);
-
-        // look up data for this user's groups
-        //groupMap.put("All", -1);
-        groupMap.put("Personal", 0);
-        groupMap.put("Higher", 2);
-        groupMap.put("Faster", 1);
-        groupMap.put("Stronger", 3);
-
         anchorDate = LocalDate.now();
         calendarTile.setMinSize(tileSize * 7, tileSize * 6 + 10);
-        calendarCombo.getItems().addAll(
-                //      "All",
-                "Personal",
-                "Faster",
-                "Higher",
-                "Stronger"
-        );
-        calendarCombo.getSelectionModel().selectFirst();
         calendarCombo.getSelectionModel().selectedItemProperty().addListener((selected, oldGroup, newGroup) -> {
             if (newGroup != null) {
-                setCalendarID(groupMap.get(newGroup));
+                setGroupID(groupMap.get(newGroup));
                 refreshCalendar();
             }
         });
@@ -180,6 +171,7 @@ public class CalendarController {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/CreateGroup.fxml"));
             Parent calendarParent = fxmlLoader.load();
             CreateGroupController controller = fxmlLoader.getController();
+            controller.setUserId(userID);
             Stage stage = new Stage();
 
             stage.setTitle("Create a new group");

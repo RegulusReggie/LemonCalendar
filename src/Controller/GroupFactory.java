@@ -17,10 +17,21 @@ public class GroupFactory {
 
         try {
             ResultSet rsGp = DBAccess.getDBA().executeQuery(selectStmt);
-
             return getGroupFromResultSet(rsGp);
         } catch (SQLException e) {
             System.out.println("While searching a group with " + gpid + " id, an error occurred: " + e);
+            throw e;
+        }
+    }
+
+    public static Group searchGroup (String name, int uid) throws SQLException, ClassNotFoundException {
+        String selectStmt = "SELECT * FROM LEMONCALENDAR.GROUP WHERE GROUPNAME = '" + name+ "' AND OWNER_ID = " + uid + ";";
+
+        try {
+            ResultSet rsGp = DBAccess.getDBA().executeQuery(selectStmt);
+            return getGroupFromResultSet(rsGp);
+        } catch (SQLException e) {
+            System.out.println("While searching a group with " + name + " groupname, an error occurred: " + e);
             throw e;
         }
     }

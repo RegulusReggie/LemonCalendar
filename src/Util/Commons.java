@@ -9,8 +9,17 @@ public class Commons {
     private Commons() {}
 
     public static List<Integer> convertStringToList(String s) {
-        if (s != null) {
+        if (s != null && !s.isEmpty()) {
             return Arrays.asList(s.split(" ")).stream().map(p -> Integer.valueOf(p)).collect(Collectors.toList());
+        }
+        else {
+            return new ArrayList<>();
+        }
+    }
+
+    public static List<String> convertStringToStringList(String s) {
+        if (s != null && !s.isEmpty()) {
+            return Arrays.asList(s.split(" "));
         }
         else {
             return new ArrayList<>();
