@@ -21,7 +21,7 @@
                 <center>
                     <AnchorPane fx:id="calendarAnchor" prefHeight="370.0" prefWidth="420">
                         <TilePane fx:id="calendarTile" />
-               <Button fx:id="AddButton" onAction="#Addbutton" layoutY="331.0" mnemonicParsing="false" text="Add Event" />
+               <Button layoutY="331.0" mnemonicParsing="false" text="Add Event" />
                <Button fx:id="refreshButton" layoutX="364.0" layoutY="331.0" mnemonicParsing="false" onAction="#refreshPage" text="Refresh" />
                     </AnchorPane>
                 </center>
