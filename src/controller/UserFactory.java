@@ -21,6 +21,19 @@ public class UserFactory {
             throw e;
         }
     }
+
+    public static User getUserByName (String username) throws SQLException, ClassNotFoundException {
+        String selectStmt = "SELECT * FROM user WHERE USERNAME ='" + username + "';";
+
+        try {
+            ResultSet rs = DBAccess.getDBA().executeQuery(selectStmt);
+            return getUserFromResultSet(rs);
+        } catch (SQLException e) {
+            System.out.println("While searching a user with " + username + " name, an error occurred: " +e);
+            throw e;
+        }
+    }
+
     private static User getUserFromResultSet(ResultSet rs) throws SQLException {
         User u = null;
         if (rs.next()) {
