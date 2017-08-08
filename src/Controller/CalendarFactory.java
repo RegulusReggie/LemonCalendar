@@ -29,6 +29,22 @@ public class CalendarFactory {
             throw e;
         }
     }
+
+    public static Calendar searchCalendar (int gid, int year, int month) throws SQLException, ClassNotFoundException {
+        String selectStmt = "SELECT a.calendar_id, a.year, a.month, a.event_ids "
+            + "FROM CALENDAR a, GROUPTOCALENDAR b "
+            + "WHERE a.MONTH = " + month + " AND a.YEAR = " + year + " AND b.GROUP_ID = " + gid
+            + " AND a.Calendar_ID = b.Calendar_ID;";
+
+        try {
+            ResultSet rsCal = DBAccess.getDBA().executeQuery(selectStmt);
+            return getCalendarFromResultSet(rsCal);
+        } catch (SQLException e) {
+            System.out.println("While searching a calendar with " + gid + " gid, an error occurred: " +e);
+            throw e;
+        }
+    }
+
     private static Calendar getCalendarFromResultSet(ResultSet rs) throws SQLException {
         Calendar cal = null;
         if (rs.next()) {

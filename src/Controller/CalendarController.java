@@ -42,6 +42,7 @@ public class CalendarController {
     private int calendarID;
     private int groupID;
     private int userID;
+    private Calendar cal;
 
     public TilePane calendarTile;
     public AnchorPane calendarAnchor;
@@ -66,6 +67,7 @@ public class CalendarController {
             }
             calendarCombo.getItems().addAll(groupnames);
             calendarCombo.getSelectionModel().select(cur_user.getUserName());
+            setGroupID(groupMap.get(cur_user.getUserName()));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,13 +129,19 @@ public class CalendarController {
             calendarTile.getChildren().add(box);
         }
 
-        Calendar cal = CalendarFactory.generateTestingCalendar(calendarID);
+        cal = null;
+        try {
+            cal = CalendarFactory.searchCalendar(groupID, anchorDate.getYear(), anchorDate.getMonthValue());
+        }  catch (Exception e){
+            e.printStackTrace();
+        }
 
         for (int i = 1; i <= month.length(anchorDate.getYear() % 4 == 0); i++) {
             VBox box = new VBox();
             box.setPrefSize(tileSize, tileSize);
             box.getChildren().add(new Label(String.valueOf(i)));
-            List<Event> eveList = cal.getEventListByDay(i);
+            List<Event> eveList = null;
+            if (cal != null) eveList = cal.getEventListByDay(i);
             if (eveList != null) {
                 for (Event e : eveList) {
                     box.getChildren().add(new Label(e.getDescription()));
@@ -149,7 +157,7 @@ public class CalendarController {
                             controller.setDate(String.format("%d%c%d%c%s%n", anchorDate.getYear(), '-',
                                     anchorDate.getMonthValue(), '-',
                                     ((Label) vb.getChildren().get(0)).getText()));
-                            controller.setEvents(eveList);
+                            controller.setEvents(cal.getEventListByDay(Integer.valueOf(((Label) vb.getChildren().get(0)).getText())));
                             Stage stage = new Stage();
                             stage.initModality(Modality.APPLICATION_MODAL);
                             stage.initStyle(StageStyle.UNDECORATED);
@@ -180,5 +188,9 @@ public class CalendarController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void refreshPage(ActionEvent actionEvent) {
+        refreshCalendar();
     }
 }
