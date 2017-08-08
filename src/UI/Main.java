@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import Socket.*;
 
 public class Main extends Application {
 
@@ -20,8 +21,9 @@ public class Main extends Application {
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
-        //DBAccess.getDBA();
 
+        Client.main();
+        //DBAccess.getDBA();
         //System.out.print(EventFactory.searchEventByDate(1984,12,31).getDescription());
         //GroupFactory.updateGpMember(1, convertStringToList("1 2 8 4"));
         //GroupFactory.insertGp("NewGroup", convertStringToList("3 4 6"), convertStringToList("1"), 3);
