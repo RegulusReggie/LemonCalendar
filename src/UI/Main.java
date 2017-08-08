@@ -22,7 +22,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
 
-        Client.main();
+        //Client.main();
         //DBAccess.getDBA();
         //System.out.print(EventFactory.searchEventByDate(1984,12,31).getDescription());
         //GroupFactory.updateGpMember(1, convertStringToList("1 2 8 4"));

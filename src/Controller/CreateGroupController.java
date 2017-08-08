@@ -30,7 +30,7 @@ public class CreateGroupController {
             return;
         }
         try {
-            if (GroupFactory.searchGroup(groupname.getText(), userId) != null) {
+            if (GroupFactory.searchGroup(groupname.getText()) != null) {
                 actionTarget.setText("Group Name is taken, try another");
                 return;
             }
@@ -60,6 +60,9 @@ public class CreateGroupController {
         }
         try {
             int gid = GroupFactory.insertGp(groupname.getText(), memberIds, userId);
+            for (int id : memberIds) {
+                GroupToUserDB.insertG2U(gid, id);
+            }
             GroupToUserDB.insertG2U(gid, userId);
         } catch (Exception e) {
             e.printStackTrace();
