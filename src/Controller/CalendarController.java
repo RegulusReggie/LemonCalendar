@@ -193,4 +193,18 @@ public class CalendarController {
     public void refreshPage(ActionEvent actionEvent) {
         refreshCalendar();
     }
+
+    public void Addbutton(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/AddNewEvent.fxml"));
+            Parent calendarParent = fxmlLoader.load();
+            Stage stage = new Stage();
+
+            stage.setTitle("Add a new event");
+            stage.setScene(new Scene(calendarParent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

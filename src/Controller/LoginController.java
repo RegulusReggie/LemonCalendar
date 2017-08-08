@@ -50,6 +50,7 @@ public class LoginController {
     }
 
     public void btn_signup(ActionEvent actionEvent) {
+//
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/SignUp.fxml"));
             Parent signUpParent = fxmlLoader.load();
