@@ -16,13 +16,36 @@
     <padding>
         <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
     </padding>
+    <top>
+        <VBox BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" spacing="12.0">
+                    <children>
+                        <Label text="Lemon Calendar">
+                            <font>
+                                <Font size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox>
+                    <children>
+                        <ComboBox fx:id="calendarCombo" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="createGroupButton" mnemonicParsing="false" onAction="#createGroup" text="Create Group" />
+                    </children>
+                    <padding>
+                        <Insets bottom="12.0" />
+                    </padding>
+                </HBox>
+            </children>
+        </VBox>
+    </top>
     <center>
             <BorderPane>
                 <center>
                     <AnchorPane fx:id="calendarAnchor" prefHeight="370.0" prefWidth="420">
                         <TilePane fx:id="calendarTile" />
-               <Button layoutY="331.0" mnemonicParsing="false" text="Add Event" />
-               <Button fx:id="refreshButton" layoutX="364.0" layoutY="331.0" mnemonicParsing="false" onAction="#refreshPage" text="Refresh" />
                     </AnchorPane>
                 </center>
          <top>
@@ -48,34 +71,11 @@
          </top>
             </BorderPane>
     </center>
+    <!-- TODO: fix padding -->
     <bottom>
         <HBox>
-
+            <Button fx:id="addEventButton" layoutY="331.0" mnemonicParsing="false" text="Add Event" onAction="#addEvent" />
+            <Button fx:id="refreshButton" layoutX="364.0" layoutY="331.0" mnemonicParsing="false" onAction="#refreshPage" text="Refresh" />
         </HBox>
     </bottom>
-   <top>
-      <VBox BorderPane.alignment="CENTER">
-         <children>
-            <HBox alignment="CENTER" spacing="12.0">
-               <children>
-                  <Label text="Lemon Calendar">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <HBox>
-               <children>
-                  <ComboBox fx:id="calendarCombo" />
-                  <Region HBox.hgrow="ALWAYS" />
-                  <Button fx:id="createGroupButton" mnemonicParsing="false" onAction="#createGroup" text="Create Group" />
-               </children>
-               <padding>
-                  <Insets bottom="12.0" />
-               </padding>
-            </HBox>
-         </children>
-      </VBox>
-   </top>
 </BorderPane>

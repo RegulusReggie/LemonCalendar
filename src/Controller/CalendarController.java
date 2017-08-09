@@ -37,6 +37,8 @@ public class CalendarController {
     public ComboBox<String> calendarCombo;
     public Label testchange;
     public Button createGroupButton;
+    public Button refreshButton;
+    public Button addEventButton;
 
     private LocalDate anchorDate;
     private int calendarID;
@@ -192,5 +194,21 @@ public class CalendarController {
 
     public void refreshPage(ActionEvent actionEvent) {
         refreshCalendar();
+    }
+
+    public void addEvent(ActionEvent actionEvent) {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/AddNewEvent.fxml"));
+            Parent calendarParent = fxmlLoader.load();
+            AddEventController controller = fxmlLoader.getController();
+            controller.setGroupId(groupID);
+            Stage stage = new Stage();
+
+            stage.setTitle("Add a new event");
+            stage.setScene(new Scene(calendarParent));
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

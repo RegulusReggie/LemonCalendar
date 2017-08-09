@@ -84,9 +84,10 @@ public class CalendarFactory {
         return calList;
     }
 
-    public static void updateCalEvent (int calId, String calEvent) throws SQLException, ClassNotFoundException {
+    public static void updateCalEvent (int calId, List<Integer> calEvent) throws SQLException, ClassNotFoundException {
         String updateStmt =
-                "UPDATE CALENDAR SET EVENT_IDS = '" + calEvent + "' " + "WHERE CALENDAR_ID = " + calId + ";";
+                "UPDATE CALENDAR SET EVENT_IDS = '" + Commons.convertListToString(calEvent)
+                        + "' " + "WHERE CALENDAR_ID = " + calId + ";";
 
         DBAccess.getDBA().executeUpdate(updateStmt);
     }
@@ -116,36 +117,4 @@ public class CalendarFactory {
         s = "Calendar_id: " +cal.getCalendarId() + ", Year: " +cal.getYear()+ ", Month: " +cal.getMonth()+ ", Event_ids: " +cal.getEventIds();
         return s;
     }
-
-    public static Calendar generateTestingCalendar(int cid) {
-        Calendar cal = new Calendar();
-        cal.setCalendarId(0);
-        cal.setEventIds(Commons.convertStringToList("0 1 2"));
-        cal.setYear(2017);
-        cal.setMonth(8);
-        calMap.put(0, cal);
-
-        Calendar cal1 = new Calendar();
-        cal1.setCalendarId(1);
-        cal1.setEventIds(Commons.convertStringToList("3 4 5 6"));
-        cal1.setYear(2017);
-        cal1.setMonth(8);
-        calMap.put(1, cal1);
-
-        Calendar cal2 = new Calendar();
-        cal2.setCalendarId(2);
-        cal2.setEventIds(Commons.convertStringToList("7"));
-        cal2.setYear(2017);
-        cal2.setMonth(8);
-        calMap.put(2, cal2);
-
-        Calendar cal3 = new Calendar();
-        cal3.setCalendarId(3);
-        cal3.setEventIds(Commons.convertStringToList("8 9 10 13 51"));
-        cal3.setYear(2017);
-        cal3.setMonth(8);
-        calMap.put(3, cal3);
-        return calMap.get(cid);
-    }
-
 }
