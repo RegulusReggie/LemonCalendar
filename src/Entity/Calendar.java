@@ -3,12 +3,14 @@ package Entity;
 import Controller.EventFactory;
 import javafx.beans.property.*;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Calendar {
+public class Calendar implements Serializable {
+    private static final long serialVersionUID = 1L;
     private IntegerProperty calendarid;
     private List<Integer> eventids;
     private IntegerProperty year;

@@ -1,17 +1,11 @@
 package UI;
 
-import Controller.CalendarFactory;
-import Controller.EventFactory;
-import Controller.GroupFactory;
-import Entity.*;
-import Util.DBAccess;
-import Util.Commons;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import Socket.*;
+import Connection.*;
 
 public class Main extends Application {
 
@@ -22,7 +16,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 600, 600));
         primaryStage.show();
 
-        //Client.main();
+        Client.main("SELECT * FROM CALENDAR;");
         //DBAccess.getDBA();
         //System.out.print(EventFactory.searchEventByDate(1984,12,31).getDescription());
         //GroupFactory.updateGpMember(1, convertStringToList("1 2 8 4"));
