@@ -20,6 +20,7 @@ import javafx.scene.control.Label;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import javafx.util.Pair;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -176,12 +177,21 @@ public class CalendarController {
         }
     }
 
+    public void updateComboBox(Pair<String, Integer> newItem) {
+        if (newItem != null) {
+            calendarCombo.getItems().add(newItem.getKey());
+            groupMap.put(newItem.getKey(), newItem.getValue());
+            calendarCombo.getSelectionModel().select(newItem.getKey());
+        }
+    }
+
     public void createGroup(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/CreateGroup.fxml"));
             Parent calendarParent = fxmlLoader.load();
             CreateGroupController controller = fxmlLoader.getController();
             controller.setUserId(userID);
+            controller.setCallback(this::updateComboBox);
             Stage stage = new Stage();
 
             stage.setTitle("Create a new group");
@@ -196,12 +206,18 @@ public class CalendarController {
         refreshCalendar();
     }
 
+    public void updateNewEvent(int year, int month) {
+        anchorDate = LocalDate.of(year, month, 1);
+        refreshCalendar();
+    }
+
     public void addEvent(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/AddNewEvent.fxml"));
             Parent calendarParent = fxmlLoader.load();
             AddEventController controller = fxmlLoader.getController();
             controller.setGroupId(groupID);
+            controller.setCallback(this::updateNewEvent);
             Stage stage = new Stage();
 
             stage.setTitle("Add a new event");

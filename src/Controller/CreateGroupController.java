@@ -9,9 +9,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class CreateGroupController {
 
@@ -21,6 +23,11 @@ public class CreateGroupController {
     public Button bt_create;
     public Button bt_cancel;
     private int userId;
+    private Consumer<Pair<String, Integer>> callback;
+
+    void setCallback(Consumer<Pair<String, Integer>> callback) {
+        this.callback = callback ;
+    }
 
     void setUserId(int uid) {userId = uid; }
 
@@ -64,11 +71,11 @@ public class CreateGroupController {
                 GroupToUserDB.insertG2U(gid, id);
             }
             GroupToUserDB.insertG2U(gid, userId);
+
+            if (callback != null) callback.accept(new Pair<>(groupname.getText(), gid));
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // TODO: Update Calendar Controller
 
         Stage stage=(Stage) bt_create.getScene().getWindow();
         stage.close();

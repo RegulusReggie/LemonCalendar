@@ -7,10 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.stage.Stage;
+import javafx.util.Pair;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 
 public class AddEventController {
@@ -20,9 +23,13 @@ public class AddEventController {
     public TextArea description;
     private int groupid;
 
+    private BiConsumer<Integer, Integer> callback;
+
+    void setCallback(BiConsumer<Integer, Integer> callback) {
+        this.callback = callback;
+    }
+
     void setGroupId(int gid) {groupid = gid; }
-
-
 
     public void bt_cancel(ActionEvent actionEvent) {
         Stage stage= (Stage) btcancel.getScene().getWindow();
@@ -52,6 +59,8 @@ public class AddEventController {
                 int eid = EventFactory.insertEvent(year, month, day, desc, calendar.getCalendarId());
                 calendar.getEventIds().add(eid);
                 CalendarFactory.updateCalEvent(calendar.getCalendarId(), calendar.getEventIds());
+
+                if (callback != null) callback.accept(year, month);
             }catch (Exception e){
                 e.printStackTrace();
             }
