@@ -36,13 +36,11 @@ public class CalendarController {
     public Button calendarBack;
     public Button calendarNext;
     public ComboBox<String> calendarCombo;
-    public Label testchange;
     public Button createGroupButton;
     public Button refreshButton;
     public Button addEventButton;
 
     private LocalDate anchorDate;
-    private int calendarID;
     private int groupID;
     private int userID;
     private Calendar cal;

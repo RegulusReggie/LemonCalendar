@@ -4,6 +4,7 @@ import Entity.*;
 import Util.Commons;
 import Util.JSONObject;
 
+import java.io.InterruptedIOException;
 import java.net.*;
 
 public class Client {
@@ -16,8 +17,8 @@ public class Client {
         DatagramPacket receiveDp;
 
         String serverHost = "127.0.0.1";
-
         int serverPort = 10010;
+
         try {
             ds = new DatagramSocket();
             byte[] data = reqobj.toString().getBytes();
@@ -25,6 +26,7 @@ public class Client {
             InetAddress address = InetAddress.getByName(serverHost);
             sendDp = new DatagramPacket(data, data.length, address, serverPort);
 
+            ds.setSoTimeout(5000);
             ds.send(sendDp);
             // sent
 
@@ -32,7 +34,15 @@ public class Client {
 
             receiveDp = new DatagramPacket(b, b.length);
 
-            ds.receive(receiveDp);
+            while (true) {
+                try {
+                    ds.receive(receiveDp);
+                } catch (SocketTimeoutException ste) {
+                    System.err.println("Request Time Out " + data);
+                    continue;
+                }
+                break;
+            }
 
             byte[] response = receiveDp.getData();
 

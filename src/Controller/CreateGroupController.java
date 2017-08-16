@@ -1,6 +1,5 @@
 package Controller;
 
-import Entity.Group;
 import Entity.User;
 import Util.Commons;
 import javafx.event.ActionEvent;
