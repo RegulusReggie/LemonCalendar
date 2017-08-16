@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-
-<GridPane alignment="CENTER" hgap="10.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.LoginController">
-  <Text text="LemonCalender" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="0" />
-  <Text text="Welcome" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+<GridPane alignment="CENTER" hgap="10.0" vgap="10.0" xmlns:fx="http://javafx.com/fxml/1"
+          xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.LoginController"
+          style="-fx-background-color: #90D3CF">
+  <Text text="LemonCalender" textAlignment="LEFT" underline="false" GridPane.columnIndex="1" GridPane.rowIndex="0">
+    <font>
+      <Font name="System Bold" size="24.0" />
+    </font>
+  </Text>
+  <Text text="Welcome!" GridPane.columnIndex="1" GridPane.rowIndex="1">
+    <font>
+      <Font size="30.0" />
+    </font>
+  </Text>
+  <ImageView fx:id="icon" fitHeight="80.0" fitWidth="80.0" GridPane.rowIndex="0" GridPane.rowSpan="2">
+    <image>
+      <Image url="@../Image/iconns.png" />
+    </image>
+  </ImageView>
   <Label text="User Name:" GridPane.columnIndex="0" GridPane.rowIndex="2" />
   <TextField fx:id="username" GridPane.columnIndex="1" GridPane.rowIndex="2" />
   <Label text="Password:" GridPane.columnIndex="0" GridPane.rowIndex="3" />
@@ -17,13 +33,6 @@
   </HBox>
   <HBox alignment="BOTTOM_LEFT" spacing="10.0" GridPane.columnIndex="0" GridPane.rowIndex="5">
     <Button onAction="#btn_signup" text="Sign up" />
-  </HBox>
-  <HBox alignment="TOP_RIGHT" maxWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
-    <Text fx:id="actiontarget" HBox.hgrow="ALWAYS">
-      <HBox.margin>
-        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-      </HBox.margin>
-    </Text>
   </HBox>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="80.0" />
@@ -41,4 +50,11 @@
     <RowConstraints maxHeight="27.0" prefHeight="27.0" />
     <RowConstraints maxHeight="20.0" prefHeight="20.0" />
   </rowConstraints>
+  <HBox alignment="TOP_RIGHT" maxWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="6">
+    <Text fx:id="actiontarget" HBox.hgrow="ALWAYS">
+      <HBox.margin>
+        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+      </HBox.margin>
+    </Text>
+  </HBox>
 </GridPane>
