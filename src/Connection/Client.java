@@ -4,7 +4,6 @@ import Entity.*;
 import Util.Commons;
 import Util.JSONObject;
 
-import java.io.InterruptedIOException;
 import java.net.*;
 
 public class Client {
@@ -16,7 +15,7 @@ public class Client {
         DatagramPacket sendDp;
         DatagramPacket receiveDp;
 
-        String serverHost = "127.0.0.1";
+        String serverHost = "172.20.10.10";
         int serverPort = 10010;
 
         try {

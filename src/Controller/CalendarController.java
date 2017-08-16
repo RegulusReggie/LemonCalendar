@@ -43,6 +43,7 @@ public class CalendarController {
     private LocalDate anchorDate;
     private int groupID;
     private int userID;
+    private User cur_user;
     private Calendar cal;
 
     public TilePane calendarTile;
@@ -54,33 +55,8 @@ public class CalendarController {
     private void setGroupID(int gid) { groupID = gid;}
     void setUserId(int id) {
         userID = id;
-        User cur_user;
-        try {
-            cur_user = UserFactory.getUserById(userID);
-
-            // get user's groups
-            List<Integer> gids = GroupToUserDB.getGroupsByUserId(id);
-            List<String> groupnames = new ArrayList<>();
-            for (int gid : gids) {
-                Group gp = GroupFactory.searchGroup(gid);
-                groupnames.add(gp.getGroupName());
-                groupMap.put(gp.getGroupName(), gid);
-            }
-            calendarCombo.getItems().addAll(groupnames);
-            calendarCombo.getSelectionModel().select(cur_user.getUserName());
-            setGroupID(groupMap.get(cur_user.getUserName()));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        anchorDate = LocalDate.now();
-        calendarTile.setMinSize(tileSize * 7, tileSize * 6 + 10);
-        calendarCombo.getSelectionModel().selectedItemProperty().addListener((selected, oldGroup, newGroup) -> {
-            if (newGroup != null) {
-                setGroupID(groupMap.get(newGroup));
-                refreshCalendar();
-            }
-        });
+        cur_user = UserFactory.getUserById(userID);;
+        refreshCombonBox();
         refreshCalendar();
     }
 
@@ -183,6 +159,30 @@ public class CalendarController {
         }
     }
 
+    private void refreshCombonBox() {
+        // get user's groups
+        List<Integer> gids = GroupToUserDB.getGroupsByUserId(userID);
+        List<String> groupnames = new ArrayList<>();
+        for (int gid : gids) {
+            Group gp = GroupFactory.searchGroup(gid);
+            groupnames.add(gp.getGroupName());
+            groupMap.put(gp.getGroupName(), gid);
+        }
+        calendarCombo.getItems().clear();
+        calendarCombo.getItems().addAll(groupnames);
+        calendarCombo.getSelectionModel().select(cur_user.getUserName());
+        setGroupID(groupMap.get(cur_user.getUserName()));
+
+        anchorDate = LocalDate.now();
+        calendarTile.setMinSize(tileSize * 7, tileSize * 6 + 10);
+        calendarCombo.getSelectionModel().selectedItemProperty().addListener((selected, oldGroup, newGroup) -> {
+            if (newGroup != null) {
+                setGroupID(groupMap.get(newGroup));
+                refreshCalendar();
+            }
+        });
+    }
+
     public void createGroup(ActionEvent actionEvent) {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("../UI/CreateGroup.fxml"));
@@ -201,6 +201,7 @@ public class CalendarController {
     }
 
     public void refreshPage(ActionEvent actionEvent) {
+        refreshCombonBox();
         refreshCalendar();
     }
 

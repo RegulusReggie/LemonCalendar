@@ -4,8 +4,6 @@ import Connection.Client;
 import Util.Commons;
 import Util.JSONObject;
 
-import java.sql.SQLException;
-
 public class GroupToCalendarDB {
 
     private GroupToCalendarDB() {}
