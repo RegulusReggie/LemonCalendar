@@ -1,10 +1,16 @@
 package Connection;
 
+import Entity.*;
+import Util.Commons;
+import Util.JSONObject;
+
 import java.net.*;
-import java.util.*;
 
 public class Client {
-    public static void main(String Stmt) {
+
+    public static Object requestHanlder(JSONObject reqobj) {
+        Object respObj = null;
+
         DatagramSocket ds = null;
         DatagramPacket sendDp;
         DatagramPacket receiveDp;
@@ -14,7 +20,7 @@ public class Client {
         int serverPort = 10010;
         try {
             ds = new DatagramSocket();
-            byte[] data = Stmt.getBytes();
+            byte[] data = reqobj.toString().getBytes();
 
             InetAddress address = InetAddress.getByName(serverHost);
             sendDp = new DatagramPacket(data, data.length, address, serverPort);
@@ -34,7 +40,52 @@ public class Client {
 
             String s = new String(response, 0, len);
 
+            JSONObject respobj = Commons.parseJSONObjectFromString(s);
             System.out.println("feedback: " + s);
+
+            switch (Integer.valueOf(respobj.getField(Commons.TYPE))) {
+                case Commons.RESPOND_CALENDAR:
+                    respObj = Calendar.parseJSON(respobj);
+                    break;
+                case Commons.RESPOND_EVENT:
+                    respObj = Event.parseJSON(respobj);
+                    break;
+                case Commons.RESPOND_USER:
+                    respObj = User.parseJSON(respobj);
+                    break;
+                case Commons.RESPOND_GROUP:
+                    respObj = Group.parseJSON(respobj);
+                    break;
+                case Commons.RESPOND_CALENDAR_ID:
+                    respObj = Integer.valueOf(respobj.getField(Commons.CALENDAR_ID));
+                    break;
+                case Commons.RESPOND_USER_ID:
+                    respObj = Integer.valueOf(respobj.getField(Commons.USER_ID));
+                    break;
+                case Commons.RESPOND_EVENT_ID:
+                    respObj = Integer.valueOf(respobj.getField(Commons.EVENT_ID));
+                    break;
+                case Commons.RESPOND_GROUP_ID:
+                    respObj = Integer.valueOf(respobj.getField(Commons.GROUP_ID));
+                    break;
+                case Commons.RESPOND_GROUP_IDS:
+                    respObj = respobj.getField(Commons.GROUP_IDS);
+                    break;
+                case Commons.SUCCESS:
+                    System.out.println("Request Succuess");
+                    break;
+                case Commons.FAIL:
+                    System.out.println("Request Failed");
+                    break;
+                case Commons.NOT_FOUND:
+                    System.out.println("Item Not Found");
+                    break;
+                case Commons.REQ_NOT_FOUND:
+                    System.out.println("Request Not Found");
+                    break;
+                default:
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -44,6 +95,7 @@ public class Client {
                 } catch (Exception e) {}
             }
         }
+        return respObj;
     }
 }
 

@@ -1,4 +1,6 @@
 package Entity;
+import Util.Commons;
+import Util.JSONObject;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
@@ -43,5 +45,13 @@ public class User implements Serializable{
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static User parseJSON(JSONObject obj) {
+        User user = new User();
+        user.setUserId(Integer.valueOf(obj.getField(Commons.USER_ID)));
+        user.setPassword(obj.getField(Commons.PASSWORD));
+        user.setUserName(obj.getField(Commons.USERNAME));
+        return user;
     }
 }

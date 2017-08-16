@@ -1,6 +1,8 @@
 package Controller;
 
-import Util.DBAccess;
+import Connection.Client;
+import Util.Commons;
+import Util.JSONObject;
 
 import java.sql.SQLException;
 
@@ -8,13 +10,11 @@ public class GroupToCalendarDB {
 
     private GroupToCalendarDB() {}
 
-    public static void insertG2C (int gid, int cid) throws SQLException, ClassNotFoundException {
-        String updateStmt =
-                "INSERT INTO `lemoncalendar`.`GROUPTOCALENDAR`\n" +
-                        "(`GROUP_ID`, `CALENDAR_ID`)\n" +
-                        "VALUES\n" +
-                        "(" + gid +", " + cid + ");";
-
-        DBAccess.getDBA().executeUpdate(updateStmt);
+    public static void insertG2C (int gid, int cid) {
+        JSONObject reqobj = new JSONObject();
+        reqobj.putField(Commons.TYPE, String.valueOf(Commons.REQ_INSERTG2C));
+        reqobj.putField(Commons.CALENDAR_ID, String.valueOf(cid));
+        reqobj.putField(Commons.GROUP_ID, String.valueOf(gid));
+        Client.requestHanlder(reqobj);
     }
 }

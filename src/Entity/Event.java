@@ -1,5 +1,7 @@
 package Entity;
 
+import Util.Commons;
+import Util.JSONObject;
 import javafx.beans.property.*;
 
 
@@ -34,4 +36,15 @@ public class Event {
     public void setDescription(String description) { this.description.set(description); }
     public int getCalID() { return this.cal_id.get(); }
     public void setCalID(int id) { this.cal_id.set(id); }
+
+    public static Event parseJSON(JSONObject obj) {
+        Event eve = new Event();
+        eve.setID(Integer.valueOf(obj.getField(Commons.EVENT_ID)));
+        eve.setDescription(obj.getField(Commons.DESCRIPTION));
+        eve.setMonth(Integer.valueOf(obj.getField(Commons.MONTH)));
+        eve.setYear(Integer.valueOf(obj.getField(Commons.YEAR)));
+        eve.setDay(Integer.valueOf(obj.getField(Commons.DAY)));
+        eve.setCalID(Integer.valueOf(obj.getField(Commons.CALENDAR_ID)));
+        return eve;
+    }
 }
