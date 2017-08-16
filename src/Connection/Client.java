@@ -27,7 +27,7 @@ public class Client {
 
             byte[] b = new byte[1024];
             receiveDp = new DatagramPacket(b, b.length);
-            ds.setSoTimeout(5000);
+            ds.setSoTimeout(2500);
 
             // sent
 
@@ -36,7 +36,7 @@ public class Client {
                     ds.send(sendDp);
                     ds.receive(receiveDp);
                 } catch (SocketTimeoutException ste) {
-                    System.err.println("Request Time Out " + data);
+                    System.err.println("Request Time Out " + reqobj.toString());
                     continue;
                 }
                 break;
