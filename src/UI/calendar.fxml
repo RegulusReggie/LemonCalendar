@@ -74,7 +74,8 @@
     <!-- TODO: fix padding -->
     <bottom>
         <HBox>
-            <Button fx:id="addEventButton" layoutY="331.0" mnemonicParsing="false" text="Add Event" onAction="#addEvent" />
+            <Button fx:id="addEventButton" layoutY="331.0" mnemonicParsing="false" onAction="#addEvent" text="Add Event" />
+         <Region HBox.hgrow="ALWAYS" />
             <Button fx:id="refreshButton" layoutX="364.0" layoutY="331.0" mnemonicParsing="false" onAction="#refreshPage" text="Refresh" />
         </HBox>
     </bottom>
