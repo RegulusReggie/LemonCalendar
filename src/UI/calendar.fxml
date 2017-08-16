@@ -1,82 +1,71 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.TilePane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
-<BorderPane fx:id="calendarPane" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CalendarController">
-    <padding>
-        <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-    </padding>
-    <top>
+<BorderPane fx:id="calendarPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2"
+            fx:controller="Controller.CalendarController" style="-fx-background-color: #90D3CF">
+  <!-- TODO: fix padding -->
+  <bottom>
+    <HBox>
+      <Button fx:id="addEventButton" mnemonicParsing="false" onAction="#addEvent" text="Add Event" />
+      <Region HBox.hgrow="ALWAYS" />
+      <Button fx:id="refreshButton" mnemonicParsing="false" onAction="#refreshPage" text="Refresh" />
+    </HBox>
+  </bottom>
+  <center>
+    <BorderPane>
+      <center>
+        <AnchorPane fx:id="calendarAnchor" prefHeight="420.0" prefWidth="420.0"
+                    style="-fx-background-image: url('../Image/lemonbg.png')">
+          <TilePane fx:id="calendarTile" style="" />
+        </AnchorPane>
+      </center>
+      <top>
         <VBox BorderPane.alignment="CENTER">
-            <children>
-                <HBox alignment="CENTER" spacing="12.0">
-                    <children>
-                        <Label text="Lemon Calendar">
-                            <font>
-                                <Font size="18.0" />
-                            </font>
-                        </Label>
-                    </children>
-                </HBox>
-                <HBox>
-                    <children>
-                        <ComboBox fx:id="calendarCombo" />
-                        <Region HBox.hgrow="ALWAYS" />
-                        <Button fx:id="createGroupButton" mnemonicParsing="false" onAction="#createGroup" text="Create Group" />
-                    </children>
-                    <padding>
-                        <Insets bottom="12.0" />
-                    </padding>
-                </HBox>
-            </children>
+          <children>
+            <HBox>
+              <Button fx:id="calendarBack" onAction="#goToLastMonth" prefWidth="106.0" text="Last Month" />
+              <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefWidth="205.0" HBox.hgrow="ALWAYS">
+                <Label fx:id="monthYear" textAlignment="RIGHT">
+                  <font>
+                    <Font size="18.0" fx:id="x1" />
+                  </font>
+                  <HBox.margin>
+                    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+                  </HBox.margin>
+                </Label>
+              </HBox>
+              <Button fx:id="calendarNext" onAction="#goToNextMonth" text="Next Month" />
+            </HBox>
+          </children>
         </VBox>
-    </top>
-    <center>
-            <BorderPane>
-                <center>
-                    <AnchorPane fx:id="calendarAnchor" prefHeight="370.0" prefWidth="420">
-                        <TilePane fx:id="calendarTile" />
-                    </AnchorPane>
-                </center>
-         <top>
-            <VBox BorderPane.alignment="CENTER">
-               <children>
-                          <HBox>
-                              <Button fx:id="calendarBack" onAction="#goToLastMonth" prefWidth="76.0" text="Last Month" />
-                              <!-- <Label fx:id="monthYear" textAlignment="CENTER" /> -->
-                     <Region HBox.hgrow="ALWAYS" />
-                              <Button fx:id="calendarNext" onAction="#goToNextMonth" text="Next Month" />
-                          </HBox>
-                  <HBox alignment="CENTER">
-                          <Label fx:id="monthYear" textAlignment="RIGHT">
-                        <font>
-                           <Font size="18.0" />
-                        </font>
-                        <HBox.margin>
-                           <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
-                        </HBox.margin></Label>
-                  </HBox>
-               </children>
-            </VBox>
-         </top>
-            </BorderPane>
-    </center>
-    <!-- TODO: fix padding -->
-    <bottom>
-        <HBox>
-            <Button fx:id="addEventButton" layoutY="331.0" mnemonicParsing="false" onAction="#addEvent" text="Add Event" />
-         <Region HBox.hgrow="ALWAYS" />
-            <Button fx:id="refreshButton" layoutX="364.0" layoutY="331.0" mnemonicParsing="false" onAction="#refreshPage" text="Refresh" />
+      </top>
+    </BorderPane>
+  </center>
+  <padding>
+    <Insets bottom="12.0" left="12.0" right="12.0" top="12.0" />
+  </padding>
+  <top>
+    <VBox BorderPane.alignment="CENTER">
+      <children>
+        <HBox alignment="CENTER" spacing="12.0">
+          <children>
+            <Label font="$x1" text="Lemon Calendar" />
+          </children>
         </HBox>
-    </bottom>
+        <HBox>
+          <children>
+            <ComboBox fx:id="calendarCombo" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button fx:id="createGroupButton" mnemonicParsing="false" onAction="#createGroup" text="Create Group" />
+          </children>
+          <padding>
+            <Insets bottom="12.0" />
+          </padding>
+        </HBox>
+      </children>
+    </VBox>
+  </top>
 </BorderPane>

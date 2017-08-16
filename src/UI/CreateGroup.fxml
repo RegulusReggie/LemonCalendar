@@ -4,7 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="235.0" prefWidth="459.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="Controller.CreateGroupController">
+<AnchorPane prefHeight="235.0" prefWidth="459.0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/2.2" style="-fx-background-color: #ffec4a"
+            fx:controller="Controller.CreateGroupController">
   <children>
     <GridPane layoutX="41.0" layoutY="14.0" prefHeight="186.0" prefWidth="379.0">
       <children>
