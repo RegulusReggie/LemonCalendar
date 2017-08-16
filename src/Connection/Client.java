@@ -26,16 +26,15 @@ public class Client {
             InetAddress address = InetAddress.getByName(serverHost);
             sendDp = new DatagramPacket(data, data.length, address, serverPort);
 
-            ds.setSoTimeout(5000);
-            ds.send(sendDp);
-            // sent
-
             byte[] b = new byte[1024];
-
             receiveDp = new DatagramPacket(b, b.length);
+            ds.setSoTimeout(5000);
+
+            // sent
 
             while (true) {
                 try {
+                    ds.send(sendDp);
                     ds.receive(receiveDp);
                 } catch (SocketTimeoutException ste) {
                     System.err.println("Request Time Out " + data);
