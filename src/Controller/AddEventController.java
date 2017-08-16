@@ -43,7 +43,7 @@ public class AddEventController {
             int year= Integer.parseInt(yyyy);
             int month= Integer.parseInt(mm);
             int day=  Integer.parseInt(dd);
-            //TODO: add lock.
+
             try {
                 Calendar calendar = CalendarFactory.searchCalendar(groupid, year, month);
                 if (calendar == null) {

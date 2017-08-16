@@ -138,8 +138,6 @@ public class CalendarController {
                                     ((Label) vb.getChildren().get(0)).getText()));
                             controller.setEvents(cal.getEventListByDay(Integer.valueOf(((Label) vb.getChildren().get(0)).getText())));
                             Stage stage = new Stage();
-                            stage.initModality(Modality.APPLICATION_MODAL);
-                            stage.initStyle(StageStyle.UNDECORATED);
                             stage.setTitle("DayCell");
                             stage.setScene(new Scene(calendarParent));
                             stage.show();

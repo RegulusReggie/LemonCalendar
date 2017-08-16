@@ -17,7 +17,11 @@ public class SignUpController {
     public PasswordField newPassword;
 
     public void btn_submit(ActionEvent actionEvent){
-        // validate username and password
+
+        if (newUser.getText().isEmpty() || newPassword.getText().isEmpty()) {
+            System.err.println("Please enter valid Username and Password");
+            return;
+        }
 
         try {
             int uid = UserFactory.insertUser(newUser.getText(), newPassword.getText());

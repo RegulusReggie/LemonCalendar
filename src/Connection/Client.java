@@ -15,7 +15,7 @@ public class Client {
         DatagramPacket sendDp;
         DatagramPacket receiveDp;
 
-        String serverHost = "172.20.10.10";
+        String serverHost = "127.0.0.1";
         int serverPort = 10010;
 
         try {
