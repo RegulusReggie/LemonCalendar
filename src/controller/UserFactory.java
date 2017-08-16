@@ -35,7 +35,6 @@ public class UserFactory {
         reqobj.putField(Commons.TYPE, String.valueOf(Commons.REQ_SEARCH_USER_BY_NAME));
         reqobj.putField(Commons.USERNAME, username);
         User user = (User) Client.requestHanlder(reqobj);
-        System.out.println(user.getPassword());
         if (user == null)
             System.out.println("No user match");
         else if (!user.getPassword().equals(password))

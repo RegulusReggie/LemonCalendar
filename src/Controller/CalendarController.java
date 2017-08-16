@@ -45,6 +45,7 @@ public class CalendarController {
     private int userID;
     private User cur_user;
     private Calendar cal;
+    private String cur_group_name;
 
     public TilePane calendarTile;
     public AnchorPane calendarAnchor;
@@ -55,7 +56,8 @@ public class CalendarController {
     private void setGroupID(int gid) { groupID = gid;}
     void setUserId(int id) {
         userID = id;
-        cur_user = UserFactory.getUserById(userID);;
+        cur_user = UserFactory.getUserById(userID);
+        cur_group_name = cur_user.getUserName();
         refreshCombonBox();
         refreshCalendar();
     }
@@ -170,14 +172,15 @@ public class CalendarController {
         }
         calendarCombo.getItems().clear();
         calendarCombo.getItems().addAll(groupnames);
-        calendarCombo.getSelectionModel().select(cur_user.getUserName());
-        setGroupID(groupMap.get(cur_user.getUserName()));
+        calendarCombo.getSelectionModel().select(cur_group_name);
+        setGroupID(groupMap.get(cur_group_name));
 
         anchorDate = LocalDate.now();
         calendarTile.setMinSize(tileSize * 7, tileSize * 6 + 10);
         calendarCombo.getSelectionModel().selectedItemProperty().addListener((selected, oldGroup, newGroup) -> {
             if (newGroup != null) {
                 setGroupID(groupMap.get(newGroup));
+                cur_group_name = newGroup;
                 refreshCalendar();
             }
         });

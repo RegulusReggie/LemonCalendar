@@ -49,7 +49,6 @@ public class Client {
             String s = new String(response, 0, len);
 
             JSONObject respobj = Commons.parseJSONObjectFromString(s);
-            System.out.println("feedback: " + s);
 
             switch (Integer.valueOf(respobj.getField(Commons.TYPE))) {
                 case Commons.RESPOND_CALENDAR:
